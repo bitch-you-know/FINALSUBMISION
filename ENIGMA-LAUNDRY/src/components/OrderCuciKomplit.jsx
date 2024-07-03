@@ -8,11 +8,10 @@ const OrderCuciKomplit = () => {
         <TableHeader>
           <TableColumn>NO</TableColumn>
           <TableColumn>CODE-REGIS</TableColumn>
-
           <TableColumn>NAMA CUSTMER</TableColumn>
           <TableColumn>JENIS PAKET</TableColumn>
           <TableColumn>WAKTU KERJA</TableColumn>
-          <TableColumn>BERAT"(KG)"</TableColumn>
+          <TableColumn>BERAT (KG)</TableColumn>
           <TableColumn>ACTION</TableColumn>
         </TableHeader>
         <TableBody>

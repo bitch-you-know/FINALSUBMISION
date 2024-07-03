@@ -1,5 +1,8 @@
+import OrderCuciKomplit from "./components/OrderCuciKomplit"
+import CuciKomplit from "./pages/CuciKomplit"
 import DashBoard from "./pages/DashBoard"
 import Login from "./pages/Login"
+import TambahOrderanBaru from "./pages/TambahOrderanBaru"
 
 function App() {
 
@@ -7,7 +10,9 @@ function App() {
   return (
      <div>
          {/* <Login/> */}
-         <DashBoard/>
+         {/* <DashBoard/> */}
+         {/* <TambahOrderanBaru/> */}
+         <CuciKomplit/>
      </div>
   )
 }
