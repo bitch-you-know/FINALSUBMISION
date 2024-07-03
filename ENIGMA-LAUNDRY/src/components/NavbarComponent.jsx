@@ -1,9 +1,9 @@
 const NavbarComponent = () => {
     return (
-        <div className="flex justify-center">
-           <p className="text-xs p-4">riwayat transaksi</p>
-           <p className="text-xs p-4">merege karyawan</p>
-           <p className="text-xs p-4">daftar paket</p>
+        <div className="flex justify-center bg-slate-400 h-10">
+           <p className="text-xs p-4"><strong>RIWAYAT TRANSAKSI</strong></p>
+           <p className="text-xs p-4"><strong>MENAGE KARYAWAN</strong></p>
+           <p className="text-xs p-4"><strong>DAFTAR</strong></p>
            
         </div>
     )
