@@ -1,52 +1,28 @@
 import { Button, Card, CardBody, CardHeader, Divider, Input, } from "@nextui-org/react"
 import NavbarAll from "../components/NavbarAll"
 import NavbarComponent from "../components/NavbarComponent"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Controller, useForm } from "react-hook-form"
-import { boolean, z } from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { axiosinstance } from "../lib/axios"
-import { toast } from "sonner"
 
 
 
 
 
-const Login = () => {
-    const navigate = useNavigate()
+const SignUp = () => {
 
-    const validateForm = z.object({
-        username: z.string().min(1),
-        password: z.string().min(1)
-
-    })
 
     const form = useForm({
         defaultValues: {
+            email: "",
             username: "",
-            password: "",
-        },
-        resolver: zodResolver(validateForm)
+            password: ""
+        }
     })
 
-    const submitLogin = async (data) => {
-        try {
-            const result = await axiosinstance.post("/auth/login", data)
-            const statusCode = result.data.status.code
-            const token = result.data.data.token
-            if (statusCode === 201) {
-                localStorage.setItem("token", token)
-                toast.success("login succes")
-                navigate("/dashboard")
-            }
-            console.log(token)
-        } catch (error) {
-            console.log(error)
-            toast.error("login gagal")
-        }
+
+    const registerUser = (data) => {
+     console.log(data)
     }
-
-
 
     return (
         <div className="bg-blue-500">
@@ -59,30 +35,41 @@ const Login = () => {
 
                         <CardBody className="flex flex-col gap-4">
 
-                            <form onSubmit={form.handleSubmit(submitLogin)}>
 
+                            <form onSubmit={form.handleSubmit(registerUser)}>
+                                <p>Email</p>
+                                <Controller
+                                    name="email"
+                                    control={form.control}
+                                    render={({ field }) => {
+                                        return (
+                                            <Input {...field} />
+                                        )
+                                    }}
+                                />
                                 <p>username</p>
                                 <Controller
-                                    name="username"
+                                    name="username" S
                                     control={form.control}
-                                    render={({ field, fieldState }) => {
+                                    render={({ field }) => {
                                         return (
-                                            <Input {...field} isInvalid={Boolean(fieldState.error)}
-                                                errorMessage={fieldState.error?.message} />
+                                            <Input {...field} />
                                         )
                                     }}
                                 />
+
+
                                 <p>password</p>
                                 <Controller
-                                    name="password"
+                                    name="password" S
                                     control={form.control}
-                                    render={({ field, fieldState }) => {
+                                    render={({ field }) => {
                                         return (
-                                            <Input {...field} isInvalid={Boolean(fieldState.error)}
-                                                errorMessage={fieldState.error?.message} />
+                                            <Input  {...field} />
                                         )
                                     }}
                                 />
+
                                 <Button type="submit" color="primary">Login</Button>
                             </form>
 
@@ -103,4 +90,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default SignUp
