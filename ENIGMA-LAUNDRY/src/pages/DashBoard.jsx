@@ -6,34 +6,50 @@ import OrderCuciKomplit from "../components/OrderCuciKomplit"
 import { useNavigate } from "react-router-dom"
 import RiwayatTransaksi from "./RiwayatTransaksi"
 import { axiosinstance } from "../lib/axios"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 
 
 
 const DashBoard = () => {
 
-const navigate =useNavigate()
+const [product,setProduct]=useState([])
 
 
-const tambahOrderan = ()=>{
-    return (
-        navigate("/daftar-paket")
-    )
-}
 
-const getProducts = async ()=>{
-    try {
-        const result = await axiosinstance.post("/auth/login",data)
-        console.log(result)
-    } catch (error) {
-        console.log(error)
+    const token = localStorage.getItem("token")
+
+
+    const navigate = useNavigate()
+
+
+    const tambahOrderan = () => {
+        return (
+            navigate("/daftar-paket")
+        )
     }
-}
 
-useEffect(()=>{
-   return getProducts
-})
+
+
+
+    const getProducts = async () => {
+
+        try {
+            const result = await axiosinstance.get("/products",{
+                headers :{Authorization:`Bearer ${token}`}
+            })
+           setProduct(result.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    useEffect(() => {
+        console.log('Updated Products:', product); // Pantau perubahan product
+    }, [product]);
 
     return (
         <div className="flex flex-col justify-content-center" >
@@ -64,9 +80,9 @@ useEffect(()=>{
                 </div>
             </main>
             <footer className="flex justify-center w-full p-4 pt-1">
-                 <div className="flex justify-between items-center w-[90%] bg-green-300">
-                    <RiwayatTransaksi/>
-                 </div>
+                <div className="flex justify-between items-center w-[90%] bg-green-300">
+                    <RiwayatTransaksi />
+                </div>
             </footer>
 
         </div>
