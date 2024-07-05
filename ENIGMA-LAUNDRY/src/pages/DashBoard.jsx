@@ -3,11 +3,24 @@ import NavbarAll from "../components/NavbarAll"
 import NavbarComponent from "../components/NavbarComponent"
 import "../style/CardStyle.css"
 import OrderCuciKomplit from "../components/OrderCuciKomplit"
+import { useNavigate } from "react-router-dom"
+import RiwayatTransaksi from "./RiwayatTransaksi"
 
 
 
 
 const DashBoard = () => {
+
+const navigate =useNavigate()
+
+
+const tambahOrderan = ()=>{
+    return (
+        navigate("/daftar-paket")
+    )
+}
+
+
     return (
         <div className="flex flex-col justify-content-center" >
             <NavbarAll />
@@ -19,7 +32,7 @@ const DashBoard = () => {
                         <p>Selamat Datang <strong>Admin</strong></p>
                         <h2 className="text-3-xl"><strong>DASHBOARD</strong></h2>
                     </div>
-                    <Button color="primary" className="mt-2">+ Order Baru</Button>
+                    <Button onClick={tambahOrderan} color="primary" className="mt-2">+ Order Baru</Button>
                 </div>
 
             </header>
@@ -38,7 +51,7 @@ const DashBoard = () => {
             </main>
             <footer className="flex justify-center w-full p-4 pt-1">
                  <div className="flex justify-between items-center w-[90%] bg-green-300">
-                    <OrderCuciKomplit/>
+                    <RiwayatTransaksi/>
                  </div>
             </footer>
 
