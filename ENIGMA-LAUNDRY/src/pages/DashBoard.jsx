@@ -5,6 +5,8 @@ import "../style/CardStyle.css"
 import OrderCuciKomplit from "../components/OrderCuciKomplit"
 import { useNavigate } from "react-router-dom"
 import RiwayatTransaksi from "./RiwayatTransaksi"
+import { axiosinstance } from "../lib/axios"
+import { useEffect } from "react"
 
 
 
@@ -20,6 +22,18 @@ const tambahOrderan = ()=>{
     )
 }
 
+const getProducts = async ()=>{
+    try {
+        const result = await axiosinstance.post("/auth/login",data)
+        console.log(result)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+useEffect(()=>{
+   return getProducts
+})
 
     return (
         <div className="flex flex-col justify-content-center" >
