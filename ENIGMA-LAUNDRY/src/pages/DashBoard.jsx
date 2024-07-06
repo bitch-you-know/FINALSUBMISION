@@ -13,11 +13,11 @@ import { useEffect, useState } from "react"
 
 const DashBoard = () => {
 
-const [product,setProduct]=useState([])
+// const [product,setProduct]=useState([])
 
 
 
-    const token = localStorage.getItem("token")
+    // const token = localStorage.getItem("token")
 
 
     const navigate = useNavigate()
@@ -32,24 +32,24 @@ const [product,setProduct]=useState([])
 
 
 
-    const getProducts = async () => {
+    // const getProducts = async () => {
 
-        try {
-            const result = await axiosinstance.get("/products",{
-                headers :{Authorization:`Bearer ${token}`}
-            })
-           setProduct(result.data.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        getProducts();
-    }, []);
+    //     try {
+    //         const result = await axiosinstance.get("/products",{
+    //             headers :{Authorization:`Bearer ${token}`}
+    //         })
+    //        setProduct(result.data.data)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+    // useEffect(() => {
+    //     getProducts();
+    // }, []);
 
-    useEffect(() => {
-        console.log('Updated Products:', product); // Pantau perubahan product
-    }, [product]);
+    // useEffect(() => {
+    //     console.log('Updated Products:', product); // Pantau perubahan product
+    // }, [product]);
 
     return (
         <div className="flex flex-col justify-content-center" >
