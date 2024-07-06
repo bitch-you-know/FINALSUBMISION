@@ -2,9 +2,11 @@
 import {Button,Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react"
 import { useEffect, useState } from "react";
 import { axiosinstance } from "../lib/axios";
+import ModalUser from "./userDetail/ModalUser";
 
 
 const OrderCuciKomplit = () => {
+  const [modalUser,setModalUser]=useState()
 
   const [products,setProducts]=useState([])
 
@@ -25,6 +27,21 @@ const OrderCuciKomplit = () => {
        }
   }
 
+  
+
+
+
+  const deleteData = async (id) => {
+    try {
+      const result = await axiosinstance.delete(`/products/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log("Data deleted:", result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   useEffect(()=>{
     getProducts()
@@ -35,33 +52,46 @@ const OrderCuciKomplit = () => {
   },[products])
 
 
+  const isOpen=()=>{
+    setModalUser(true)
+  }
+  const onClose=()=>{
+    setModalUser(false)
+  }
+
+
     return (
-      <Table  aria-label="Example static collection table">
+      
+        <Table>
        
-        <TableHeader>
-          <TableColumn>CODE-REGIS</TableColumn>
-          <TableColumn>JENIS PAKET</TableColumn>
-          <TableColumn>HARGA</TableColumn>
-          <TableColumn>BERAT (KG)</TableColumn>
-          <TableColumn>ACTION</TableColumn>
-        </TableHeader>
-        <TableBody>
-          {products.map((list)=>(
-            <TableRow key={list.id} >
-            <TableCell>{list.id}</TableCell>
-            <TableCell>{list.name}</TableCell>
-            <TableCell>{list.price}</TableCell>
-            <TableCell>{list.type}</TableCell>
-            <TableCell>
-              <Button>Detail</Button>
-              <Button>Hapus</Button>
-            </TableCell>
-          </TableRow>
-          
-          ))}
-       
-        </TableBody>
-      </Table>
+       <TableHeader>
+         <TableColumn>NO</TableColumn>
+         <TableColumn>CODE-REGIS</TableColumn>
+         <TableColumn>JENIS PAKET</TableColumn>
+         <TableColumn>HARGA</TableColumn>
+         <TableColumn>BERAT (KG)</TableColumn>
+         <TableColumn>ACTION</TableColumn>
+       </TableHeader>
+       <TableBody>
+         {products.map((list,index)=>(
+           <TableRow key={list.id} >
+           <TableCell>{index + 1}</TableCell>
+           <TableCell>{list.id}</TableCell>
+           <TableCell>{list.name}</TableCell>
+           <TableCell>{list.price}</TableCell>
+           <TableCell>{list.type}</TableCell>
+           <TableCell>
+             <Button >Detail</Button>
+             <ModalUser  />
+             <Button onPress={() => deleteData(list.id)} >Hapus</Button>
+           </TableCell>
+         </TableRow>
+         
+         ))}
+      
+       </TableBody>
+     </Table>
+    
     );
   }
   

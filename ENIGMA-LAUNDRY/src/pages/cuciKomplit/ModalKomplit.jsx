@@ -23,10 +23,14 @@ const ModalKomplit = ({ isOpen, onClose }) => {
 
   const resultSubmit = async (data) => {
     try {
-      const result = await axiosinstance.post("/products", data,
+      const modifiedData = {
+        ...data,
+        price: parseFloat(data.price),
+      };
+      const result = await axiosinstance.post("/products", modifiedData,
         { headers: { Authorization: `Bearer ${token}` } }
       )
-       console.log(result)
+      console.log(result)
     } catch (error) {
      console.log(error)
     }

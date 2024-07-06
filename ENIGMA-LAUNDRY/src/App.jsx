@@ -8,6 +8,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import DashBoard from "./pages/DashBoard"
 import ModalKomplit from "./pages/cuciKomplit/ModalKomplit"
+import ModalUser from "./pages/userDetail/ModalUser"
 function App() {
 
 
@@ -22,6 +23,8 @@ function App() {
         <Route element={<RiwayatTransaksi />} path="/riwayat-transaksi" />
         <Route element={<DaftarPaket />} path="/daftar-paket" />
         <Route element={<ModalKomplit/>} path="/modal-komplit" />
+        <Route element={<ModalUser/>} path="/modal-user" />
+        
       </Routes>
     </div>
   )
