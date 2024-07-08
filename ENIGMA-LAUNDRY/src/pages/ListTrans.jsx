@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react"
 import { axiosinstance } from "../lib/axios"
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react"
+import {Button,Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from "@nextui-org/react"
+import { Await } from "react-router-dom"
+import { set } from "react-hook-form"
 const ListTrans = () => {
 
     const token = localStorage.getItem("token")
-    const [trans, setTrans] = useState([])
+    const [billDetails, setBillDetails] = useState([])
+    const [customer,setCustomer] = useState([])
+    const [user,setUser] = useState([])
 
     const getListTrans = async () => {
         try {
@@ -12,7 +16,10 @@ const ListTrans = () => {
                 headers: { Authorization: `Bearer ${token}` }
             })
 
-            setTrans(result.data.data[0])
+            setBillDetails(result.data.data[0].billDetails[0])
+            setCustomer(result.data.data[0].customer)
+            setUser(result.data.data[0].user)
+
         }
         catch (error) {
             console.log(error)
@@ -24,29 +31,37 @@ const ListTrans = () => {
     }, [])
 
     useEffect(() => {
-        console.log(trans)
+      console.log()
     })
     return (
 
-
         <Table>
+       
+        <TableHeader>
+      
+          <TableColumn>CODE-REGIS</TableColumn>
+          <TableColumn>JENIS PAKET</TableColumn>
+          <TableColumn>HARGA</TableColumn>
+          <TableColumn>ACTION</TableColumn>
+        </TableHeader>
+        <TableBody>
+          
+            <TableRow  >
+           
+            <TableCell>{customer.id}</TableCell>
+            <TableCell><h1 className="font-semibold text-xl">{customer.name}</h1><p>{billDetails.qty} Transaksi</p></TableCell>
 
-            <TableHeader>
-                <TableColumn>NO</TableColumn>
-                <TableColumn>CODE-REGIS</TableColumn>
-            </TableHeader>
-            <TableBody>
-
-              
-                 <TableRow >
-                 <TableCell>{trans.id}</TableCell>
-                 <TableCell></TableCell>
-             </TableRow>
+            <TableCell>{billDetails.price}</TableCell>
+            <TableCell>
+              <Button ><p>Detail Transaksi</p></Button>
              
-
-
-            </TableBody>
-        </Table>
+            </TableCell>
+          </TableRow>
+          
+        
+       
+        </TableBody>
+      </Table>
 
     )
 }

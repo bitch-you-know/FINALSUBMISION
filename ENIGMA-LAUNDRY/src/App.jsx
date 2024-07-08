@@ -11,6 +11,7 @@ import ModalUser from "./pages/userDetail/ModalUser"
 import HomePage from "./pages/HomePage"
 import ListCustomers from "./pages/ListCustomers"
 import ListTrans from "./pages/ListTrans"
+import ModalTrans from "./pages/trans/ModalTrans"
 function App() {
 
 
@@ -28,7 +29,7 @@ function App() {
         <Route element={<HomePage/>} path="/"  />
         <Route element={<ListCustomers/>} path="/customers"  />
         <Route element={<ListTrans/>} path="/trans"  />
-        
+        <Route element={<ModalTrans/>} path="/modal-trans" />
         
       </Routes>
     </div>
