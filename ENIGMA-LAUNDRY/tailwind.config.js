@@ -9,7 +9,10 @@ export default {
 
   ],
   theme: {
-    extend: {},
+    extend: {      backgroundImage: {
+      'home-background': "url('/src/assets/bgHome.jpg')", // Ganti dengan path ke gambar kamu
+    }
+},
   },
   darkMode: "class",
   plugins: [nextui()]

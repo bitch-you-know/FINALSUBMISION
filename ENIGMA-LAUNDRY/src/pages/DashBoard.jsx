@@ -4,9 +4,10 @@ import NavbarComponent from "../components/NavbarComponent"
 import "../style/CardStyle.css"
 import OrderCuciKomplit from "../components/OrderCuciKomplit"
 import { useNavigate } from "react-router-dom"
-import RiwayatTransaksi from "./RiwayatTransaksi"
 import { axiosinstance } from "../lib/axios"
 import { useEffect, useState } from "react"
+import ListProduct from "./ListProduct"
+import ListCustomers from "./ListCustomers"
 
 
 
@@ -80,8 +81,12 @@ const DashBoard = () => {
                 </div>
             </main>
             <footer className="flex justify-center w-full p-4 pt-1">
-                <div className="flex justify-between items-center w-[90%] bg-green-300">
-                    <RiwayatTransaksi />
+                <div className="flex flex-col justify-between items-center w-[90%] bg-green-300">
+                    <ListProduct />
+                    <br />
+                    <div><h1 className="font-semibold text-3xl">List Customers</h1></div>
+                    <br />
+                    <ListCustomers/>
                 </div>
             </footer>
 

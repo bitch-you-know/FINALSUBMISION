@@ -5,8 +5,7 @@ import { axiosinstance } from "../lib/axios";
 import ModalUser from "./userDetail/ModalUser";
 
 
-const OrderCuciKomplit = () => {
-  const [modalUser,setModalUser]=useState()
+const ListProduct = () => {
 
   const [products,setProducts]=useState([])
 
@@ -49,15 +48,8 @@ const OrderCuciKomplit = () => {
 
   useEffect(()=>{
     console.log(products)
-  },[products])
+  },[])
 
-
-  const isOpen=()=>{
-    setModalUser(true)
-  }
-  const onClose=()=>{
-    setModalUser(false)
-  }
 
 
     return (
@@ -83,7 +75,7 @@ const OrderCuciKomplit = () => {
            <TableCell>
              <Button >Detail</Button>
              <ModalUser  />
-             <Button onPress={() => deleteData(list.id)} >Hapus</Button>
+             <Button onClick={() => deleteData(list.id)} >Hapus</Button>
            </TableCell>
          </TableRow>
          
@@ -95,4 +87,4 @@ const OrderCuciKomplit = () => {
     );
   }
   
-  export default OrderCuciKomplit;
+  export default ListProduct;
