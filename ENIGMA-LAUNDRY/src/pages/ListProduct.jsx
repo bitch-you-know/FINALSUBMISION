@@ -58,7 +58,6 @@ const ListProduct = () => {
        
        <TableHeader>
          <TableColumn>NO</TableColumn>
-         <TableColumn>CODE-REGIS</TableColumn>
          <TableColumn>JENIS PAKET</TableColumn>
          <TableColumn>HARGA</TableColumn>
          <TableColumn>BERAT (KG)</TableColumn>
@@ -71,7 +70,6 @@ const ListProduct = () => {
            <TableCell>{list.id}</TableCell>
            <TableCell>{list.name}</TableCell>
            <TableCell>{list.price}</TableCell>
-           <TableCell>{list.type}</TableCell>
            <TableCell>
              <Button >Detail</Button>
              <ModalUser  />

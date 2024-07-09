@@ -8,13 +8,14 @@ import { axiosinstance } from "../lib/axios"
 import { useEffect, useState } from "react"
 import ListProduct from "./ListProduct"
 import ListCustomers from "./ListCustomers"
+import ListTrans from "./ListTrans"
 
 
 
 
 const DashBoard = () => {
 
-// const [product,setProduct]=useState([])
+    // const [product,setProduct]=useState([])
 
 
 
@@ -53,22 +54,22 @@ const DashBoard = () => {
     // }, [product]);
 
     return (
-        <div className="flex flex-col justify-content-center" >
+        <div className="flex flex-col justify-content-center bg-slate-200" >
             <NavbarAll />
             <NavbarComponent />
 
             <header className="flex justify-center items-center w-full p-4 ">
-                <div className="flex justify-between items-center w-[90%] bg-green-300">
+                <div className="flex justify-between items-center w-[90%] bg-slate-300">
                     <div >
                         <p>Selamat Datang <strong>Admin</strong></p>
-                        <h2 className="text-3-xl"><strong>DASHBOARD</strong></h2>
+                        <h2 className="text-3xl"><strong>DASHBOARD</strong></h2>
                     </div>
                     <Button onClick={tambahOrderan} color="primary" className="mt-2">+ Order Baru</Button>
                 </div>
 
             </header>
             <main className="flex justify-center w-full p-4" >
-                <div className="flex justify-between items-center w-[90%] bg-green-300">
+                <div className="flex justify-between items-center w-[90%] bg-slate-300">
                     <div className="card">
                         div1
                     </div>
@@ -81,12 +82,17 @@ const DashBoard = () => {
                 </div>
             </main>
             <footer className="flex justify-center w-full p-4 pt-1">
-                <div className="flex flex-col justify-between items-center w-[90%] bg-green-300">
+                <div className="flex flex-col justify-between items-center w-[90%] bg-slate-300">
+
+
+                    <ListTrans />
+                    <br />
                     <ListProduct />
                     <br />
+                    
                     <div><h1 className="font-semibold text-3xl">List Customers</h1></div>
                     <br />
-                    <ListCustomers/>
+                    <ListCustomers />
                 </div>
             </footer>
 
