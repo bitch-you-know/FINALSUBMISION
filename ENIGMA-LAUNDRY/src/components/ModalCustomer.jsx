@@ -27,7 +27,7 @@ const resultSubmit= async (data)=>{
             headers :{ Authorization :`Bearer ${token}`}
         })
         console.log(response)
-        toast.success("detail transaksi")
+        toast.success("Customer Berhasil di Tambahkan")
 
     } catch (error) {
         console.log(error.message)
@@ -58,7 +58,7 @@ const resultSubmit= async (data)=>{
                     }}
                   />
                   <Controller
-                    name='price'
+                    name='phoneNumber'
                     control={form.control}
                     render={({ field }) => {
                       return (
@@ -71,14 +71,14 @@ const resultSubmit= async (data)=>{
                     }}
                   />
                   <Controller
-                    name='type'
+                    name='address'
                     control={form.control}
                     render={({ field }) => {
                       return (
                         <Input {...field}
                           label="Alamat"
                           variant="bordered"
-                          type='number'
+                         
                         />
                       )
                     }}

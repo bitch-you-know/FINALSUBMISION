@@ -2,7 +2,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react";
 import { axiosinstance } from "../lib/axios";
 import { useEffect, useState } from "react";
 
-const ModalListTrans = ({ isOpen, onClose }) => {
+const ModalDetailTrans = ({ isOpen, onClose }) => {
   const token = localStorage.getItem("token");
   const [state, setState] = useState([]);
 
@@ -44,4 +44,4 @@ const ModalListTrans = ({ isOpen, onClose }) => {
   );
 };
 
-export default ModalListTrans;
+export default ModalDetailTrans;

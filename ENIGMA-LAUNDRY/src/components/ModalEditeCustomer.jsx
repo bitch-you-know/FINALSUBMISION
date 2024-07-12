@@ -7,99 +7,96 @@ import { toast } from "sonner";
 
 
 
-const ModalEditeCustomer =({isOpen,onClose,handleFetchData})=>{
+const ModalEditeCustomer = ({ handleFetchData, customer }) => {
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: "",
+      phoneNumber: "",
+      address: "",
+    },
+  });
 
+  const token = localStorage.getItem("token");
 
-    const form=useForm({
-        defaultValues :{
-            name : "",
-            phoneNumber:"",
-            address :""
-    
-        }
-    })
-    
-    
-    
-     const token =localStorage.getItem("token")
-     
-    const resultSubmit = async (data)=>{
-        try {
-            // const response = await axiosinstance.put("/customers",data,{
-            //     headers :{ Authorization :`Bearer ${token}`}
-            // })
-            // console.log(response)
-            // handleFetchData()
-            // toast.success("Update transaksi")
-            console.log(data)
-    
-        } catch (error) {
-            console.log(error.message)
-        }
+  const resultSubmit = async (data) => {
+    try {
+      const response = await axiosinstance.put("/customers", data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(response);
+      handleFetchData();
+      toast.success("Update transaksi");
+    } catch (error) {
+      console.log(error.message);
     }
-    
-    
-        return(
-              <div>
-                 <Modal isOpen={isOpen} onOpenChange={onClose}>
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1 bg-slate-700 text-white" >Transaksi Baru</ModalHeader>
-    
-                  <ModalBody>
-                    <form onSubmit={form.handleSubmit(resultSubmit)}>
-                      <Controller
-                        name='name'
-                        control={form.control}
-                        render={({ field }) => {
-                          return (
-                            <Input {...field}
-                              label="Nama"
-                              variant="bordered"
-                            />
-                          )
-                        }}
-                      />
-                      <Controller
-                        name='price'
-                        control={form.control}
-                        render={({ field }) => {
-                          return (
-                            <Input {...field}
-                              label="PhoneNumber"
-                              variant="bordered"
-                              type='number'
-                            />
-                          )
-                        }}
-                      />
-                      <Controller
-                        name='type'
-                        control={form.control}
-                        render={({ field }) => {
-                          return (
-                            <Input {...field}
-                              label="Alamat"
-                              variant="bordered"
-                              type='number'
-                            />
-                          )
-                        }}
-                      />
-                      <Button color="danger" variant="flat" onPress={onClose}>
-                        Cancel
-                      </Button>
-                      <Button type='submit' color="primary" >
-                        Tambah Orderan
-                      </Button >
-                    </form>
-                  </ModalBody>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
-              </div>
-        )
+  };
+
+  useEffect(() => {
+    if (customer) {
+      reset({
+        id: customer.id,
+        name: customer.name,
+        phoneNumber: customer.phoneNumber,
+        address: customer.address,
+      });
     }
-    export default ModalEditeCustomer
+  }, [customer, reset]);
+
+  return (
+    <div>
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1 bg-slate-700 text-white">
+              Update Customer
+            </ModalHeader>
+
+            <ModalBody>
+              <form onSubmit={handleSubmit(resultSubmit)}>
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <Input {...field} label="Nama" variant="bordered" />
+                  )}
+                />
+                <Controller
+                  name="phoneNumber"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      label="PhoneNumber"
+                      variant="bordered"
+                      type="text"
+                    />
+                  )}
+                />
+                <Controller
+                  name="address"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      label="Alamat"
+                      variant="bordered"
+                      type="text"
+                    />
+                  )}
+                />
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button type="submit" color="primary">
+                  Tambah Orderan
+                </Button>
+              </form>
+            </ModalBody>
+          </>
+        )}
+      </ModalContent>
+    </div>
+  );
+};
+
+export default ModalEditeCustomer;
