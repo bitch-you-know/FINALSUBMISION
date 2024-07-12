@@ -1,49 +1,43 @@
-import React, { useState } from 'react';
-
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Checkbox, Link, Divider } from '@nextui-org/react';
+import { Card, CardBody, CardHeader } from "@nextui-org/react"
+import { axiosinstance } from "../lib/axios"
+import { useEffect } from "react"
 import { Controller, useForm } from 'react-hook-form';
-import { axiosinstance } from '../../lib/axios';
-import { toast } from 'sonner';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Checkbox, Link, Divider } from '@nextui-org/react';
+import { toast } from "sonner";
 
-const ModalAddProduct = ({ isOpen, onClose }) => {
-
-  const [kompqlit, setkomplit] = useState({})
+const ModalCustomer =({isOpen,onClose})=>{
 
 
-  const token = localStorage.getItem("token")
-
-  const form = useForm({
-    defaultValues: {
-      name: "",
-      price: "",
-      type: ""
+const form=useForm({
+    defaultValues :{
+        name : "",
+        phoneNumber:"",
+        address :""
 
     }
-  })
+})
 
 
-  const resultSubmit = async (data) => {
+
+ const token =localStorage.getItem("token")
+ 
+const resultSubmit= async (data)=>{
     try {
-      const modifiedData = {
-        ...data,
-        price: parseFloat(data.price),
-      };
-      const result = await axiosinstance.post("/products", modifiedData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      console.log(result)
-      toast.success("berhasil menambahkan product")
+        const response = await axiosinstance.post("/customers",data,{
+            headers :{ Authorization :`Bearer ${token}`}
+        })
+        console.log(response)
+        toast.success("detail transaksi")
+
     } catch (error) {
-     console.log(error)
-     toast.error("gagal memasukan product")
+        console.log(error.message)
     }
-  }
+}
 
 
-
-  return (
-    <div>
-      <Modal isOpen={isOpen} onOpenChange={onClose}>
+    return(
+          <div>
+             <Modal isOpen={isOpen} onOpenChange={onClose}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -57,7 +51,7 @@ const ModalAddProduct = ({ isOpen, onClose }) => {
                     render={({ field }) => {
                       return (
                         <Input {...field}
-                          label="JENIS PAKET"
+                          label="Nama"
                           variant="bordered"
                         />
                       )
@@ -69,7 +63,7 @@ const ModalAddProduct = ({ isOpen, onClose }) => {
                     render={({ field }) => {
                       return (
                         <Input {...field}
-                          label="HARGA"
+                          label="PhoneNumber"
                           variant="bordered"
                           type='number'
                         />
@@ -82,7 +76,7 @@ const ModalAddProduct = ({ isOpen, onClose }) => {
                     render={({ field }) => {
                       return (
                         <Input {...field}
-                          label="BERAT"
+                          label="Alamat"
                           variant="bordered"
                           type='number'
                         />
@@ -101,8 +95,7 @@ const ModalAddProduct = ({ isOpen, onClose }) => {
           )}
         </ModalContent>
       </Modal>
-    </div>
-  );
-};
-
-export default ModalAddProduct;
+          </div>
+    )
+}
+export default ModalCustomer

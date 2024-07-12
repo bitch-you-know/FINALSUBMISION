@@ -3,33 +3,35 @@ import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from "@nextui
 import { useNavigate } from "react-router-dom";
 import NavbarAll from "../components/NavbarAll";
 import NavbarComponent from "../components/NavbarComponent";
-import ModalKomplit from './cuciKomplit/ModalKomplit';
+
+import ModalCustomer from '../components/ModalCustomer';
+import ListProduct from './ListProduct';
 
 const DaftarPaket = () => {
 
-    const [isOpenModal,SetIsOpenModal]=useState()
+    const [isOpenModal, SetIsOpenModal] = useState()
     const navigate = useNavigate();
 
     const handleNavigate = (path) => {
         navigate(path);
     };
 
-const openModal =()=>{
-    SetIsOpenModal(true)
-}
+    const openModal = () => {
+        SetIsOpenModal(true)
+    }
 
-const closeModal =()=>{
-    SetIsOpenModal(false)
-}
+    const closeModal = () => {
+        SetIsOpenModal(false)
+    }
 
     return (
         <div className="flex flex-col justify-center ">
             <NavbarAll />
             <NavbarComponent />
-            <div><br/></div>
+            <div><br /></div>
             <br />
             <div className="flex justify-center">
-                <Card className="w-[80%] h-1/2">
+                <Card className="w-[80%] h-">
                     <CardHeader>
                         <strong><h1>Tambah Orderan Baru</h1></strong>
                     </CardHeader>
@@ -39,14 +41,14 @@ const closeModal =()=>{
                             className="bg-slate-300 w-[200px] h-[200px] m-4 cursor-pointer"
                             onClick={openModal}
                         >
-                            
+
                             <h3>Cuci Komplit</h3>
                         </div>
                         <div
                             className="bg-slate-300 w-[200px] h-[200px] m-4 cursor-pointer"
                             onClick={openModal}
                         >
-                            <ModalKomplit isOpen={isOpenModal} onClose={closeModal} />
+                            <ModalCustomer isOpen={isOpenModal} onClose={closeModal} />
                             <h3>Dry Clean</h3>
                         </div>
                         <div
@@ -57,8 +59,8 @@ const closeModal =()=>{
                         </div>
                     </CardBody>
                     <CardFooter>
-                        
-                        
+
+                      <ListProduct/>
                     </CardFooter>
                 </Card>
             </div>

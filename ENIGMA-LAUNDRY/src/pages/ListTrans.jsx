@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { axiosinstance } from "../lib/axios";
 import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Divider, Card } from "@nextui-org/react";
-import ModalTrans from "./trans/ModalTrans";
+import ModalTrans from "../components/ModalListTrans";
+import NavbarAll from "../components/NavbarAll";
+import NavbarComponent from "../components/NavbarComponent";
 
 const ListTrans = () => {
     const token = localStorage.getItem("token");
@@ -11,7 +13,7 @@ const ListTrans = () => {
 
     const getListTrans = async () => {
         try {
-            const result = await axiosinstance.get("bills", {
+            const result = await axiosinstance.get("bills",{
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -26,41 +28,6 @@ const ListTrans = () => {
 
 
 
-    // const getListTrans = async () => {
-    //     try {
-    //         const headers = {
-    //             Authorization: `Bearer ${token}`,
-    //         };
-    //         const response = await axiosinstance.get("/bills", { headers });
-    //         const transactions = response.data.data;
-
-    //         const newCustomerDataTransaction = {};
-
-    //         transactions.forEach((transaction) => {
-    //             const customerId = transaction.customer.id;
-
-    //             // jika customerId belum ada di objek newCustomerDataTransaction, tambahkan property baru
-    //             if (!newCustomerDataTransaction[customerId]) {
-    //                 newCustomerDataTransaction[customerId] = {
-    //                     ...transaction.customer, // copy semua properti customer
-    //                     transactions: [], // tambahkan properti transactions yang menampung daftar transaksi dari response.data.data
-    //                     transactionCount: 0, // tambahkan properti transactionCount untuk menghitung jumlah transaksi
-    //                 };
-    //             }
-    //             // Tambahkan transaksi ke daftar transaksi pelanggan
-    //             newCustomerDataTransaction[customerId].transactions.push(transaction);
-    //             // Tingkatkan jumlah transaksi pelanggan
-    //             newCustomerDataTransaction[customerId].transactionCount += 1;
-    //         });
-
-    //         setTrans(newCustomerDataTransaction);
-
-    //         console.log(response.data.data);
-    //     } catch (error) {
-    //         console.log(error.message);
-    //     }
-    // };
-
 
 
 
@@ -68,10 +35,6 @@ const ListTrans = () => {
         getListTrans();
 
     }, []);
-
-    // useEffect(() => {
-    //     console.log(trans)
-    // }, [trans])
 
 
     const openModal = () => {
@@ -85,6 +48,8 @@ const ListTrans = () => {
     return (
 
       <div className="w-full">
+            <NavbarAll/>
+            <NavbarComponent/>
            <Card>
             <h1 className="pl-5">RIWAYAT TRANSAKSI</h1>
            
@@ -97,10 +62,10 @@ const ListTrans = () => {
             <TableBody>
                 {trans.map((data) => (
                     <TableRow >
-                        <TableCell>{data.customer.id}</TableCell>
+                        <TableCell>{data.id}</TableCell>
                         <TableCell>
-                            <h1 className="font-semibold text-xl">{ }</h1>
-                            <p>{ } Transaksi</p>
+                            <h1 className="font-semibold text-xl">{data.customer.name}</h1>
+                            <p>{data.billDetails[0].qty} Transaksi</p>
                         </TableCell>
                         <TableCell>
                             <Button onClick={openModal}>

@@ -1,13 +1,14 @@
-
 import {Button,Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react"
 import { useEffect, useState } from "react";
 import { axiosinstance } from "../lib/axios";
-import ModalUser from "./userDetail/ModalUser";
+import ModalListTrans from "../components/ModalListTrans";
+import ModalAddProduct from "./cuciKomplit/ModalKomplit";
 
 
 const ListProduct = () => {
 
   const [products,setProducts]=useState([])
+  const [openModal,setOpenModal] =useState()
 
 
   const token=localStorage.getItem("token")
@@ -25,6 +26,9 @@ const ListProduct = () => {
          console.log(error.massage)
        }
   }
+
+
+  
 
   
 
@@ -51,6 +55,14 @@ const ListProduct = () => {
   },[])
 
 
+  const isOpenModal=()=>{
+    setOpenModal(true)
+  }
+
+  const closeModal=()=>{
+    setOpenModal(false)
+  }
+
 
     return (
       
@@ -70,10 +82,10 @@ const ListProduct = () => {
            <TableCell>{list.id}</TableCell>
            <TableCell>{list.name}</TableCell>
            <TableCell>{list.price}</TableCell>
-           <TableCell>
-             <Button >Detail</Button>
-             <ModalUser  />
-             <Button onClick={() => deleteData(list.id)} >Hapus</Button>
+           <TableCell className="flex">
+             <Button color="primary" onClick={isOpenModal} >ADD </Button>
+            <ModalAddProduct isOpen={openModal}  onClose={closeModal}/>
+             <Button  color="danger" onClick={() => deleteData(list.id)} >DELETE</Button>
            </TableCell>
          </TableRow>
          

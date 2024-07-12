@@ -10,8 +10,10 @@ const DEFAULT_STATE = {
 export const authReducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case "SET_TOKEN":
+            localStorage.setItem("token", action.token)
             return { ...state, token: action.token, isAuthenticated: true };
         case "LOGOUT":
+            localStorage.removeItem("token")
             return { ...state, token: null, isAuthenticated: false }
         case "CHECK_AUTH_STATUS":
             return {

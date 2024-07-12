@@ -2,13 +2,10 @@ import { Button } from "@nextui-org/react"
 import NavbarAll from "../components/NavbarAll"
 import NavbarComponent from "../components/NavbarComponent"
 import "../style/CardStyle.css"
-import OrderCuciKomplit from "../components/OrderCuciKomplit"
 import { useNavigate } from "react-router-dom"
-import { axiosinstance } from "../lib/axios"
-import { useEffect, useState } from "react"
 import ListProduct from "./ListProduct"
 import ListCustomers from "./ListCustomers"
-import ListTrans from "./ListTrans"
+
 
 
 
@@ -66,7 +63,7 @@ const DashBoard = () => {
                     </div>
                     <Button onClick={tambahOrderan} color="primary" className="mt-2">+ Order Baru</Button>
                 </div>
-
+                 
             </header>
             <main className="flex justify-center w-full p-4" >
                 <div className="flex justify-between items-center w-[90%] bg-slate-300">
@@ -83,16 +80,13 @@ const DashBoard = () => {
             </main>
             <footer className="flex justify-center w-full p-4 pt-1">
                 <div className="flex flex-col justify-between items-center w-[90%] bg-slate-300">
+                <h1 className="font-bold text-2xl">Customer List</h1>
+                    <ListCustomers />
+                    <br />
 
-
-                    <ListTrans />
+                    <div><h1 className="font-bold text-2xl">List Paket</h1></div>
                     <br />
                     <ListProduct />
-                    <br />
-                    
-                    <div><h1 className="font-semibold text-3xl">List Customers</h1></div>
-                    <br />
-                    <ListCustomers />
                 </div>
             </footer>
 

@@ -19,9 +19,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 
     <NextUIProvider>
+      <Provider store={store}>
       <BrowserRouter>
        <App/>
       </BrowserRouter>
+      </Provider>
     </NextUIProvider>
    
   </React.StrictMode>,

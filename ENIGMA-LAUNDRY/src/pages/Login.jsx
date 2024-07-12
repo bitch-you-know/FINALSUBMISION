@@ -1,12 +1,13 @@
 import { Button, Card, CardBody, CardHeader, Divider, Input, } from "@nextui-org/react"
 import NavbarAll from "../components/NavbarAll"
 import NavbarComponent from "../components/NavbarComponent"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Controller, useForm } from "react-hook-form"
 import { boolean, z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { axiosinstance } from "../lib/axios"
 import { toast } from "sonner"
+import { useDispatch } from "react-redux"
 
 
 
@@ -20,6 +21,9 @@ const Login = () => {
         password: z.string().min(1)
 
     })
+
+
+     const dispatch = useDispatch()
 
     const form = useForm({
         defaultValues: {
@@ -35,8 +39,9 @@ const Login = () => {
             const statusCode = result.data.status.code
             const token = result.data.data.token
             if (statusCode === 201) {
-                localStorage.setItem("token", token)
+                dispatch({type:"SET_TOKEN",token:token})
                 toast.success("login succes")
+                  
                 navigate("/dashboard")
             }
             console.log(token)
@@ -49,7 +54,7 @@ const Login = () => {
 
 
     return (
-        <div className="bg-blue-500">
+        <div className="bg-home-login bg-cover bg-center min-h-screen">
 
             <div className="flex h-screen items-center justify-center mt-0">
                 <Card className="w-[400px] ">
@@ -90,7 +95,7 @@ const Login = () => {
 
 
                         </CardBody>
-                        <Link to={"/dashboard"}>dasdsa</Link>
+                       
                     </div>
                     <div>
 

@@ -11,6 +11,7 @@ export default {
   theme: {
     extend: {      backgroundImage: {
       'home-background': "url('/src/assets/bgHome.jpg')", // Ganti dengan path ke gambar kamu
+      'home-login': "url('/src/assets/login.jpg')"
     }
 },
   },
