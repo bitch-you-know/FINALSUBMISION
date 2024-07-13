@@ -1,6 +1,5 @@
 import { Button } from "@nextui-org/react"
-import NavbarAll from "../components/NavbarAll"
-import NavbarComponent from "../components/NavbarComponent"
+import Navbar from "../components/Navbar"
 import "../style/CardStyle.css"
 import ListCustomers from "./ListCustomers"
 import { useState } from "react"
@@ -26,8 +25,8 @@ const closeModal=()=>{
 
     return (
         <div className="flex flex-col justify-content-center bg-slate-200" >
-            <NavbarAll />
-            <NavbarComponent />
+            <Navbar />
+            
 
             <header className="flex justify-center items-center w-full p-4 pb-1 ">
                 <div className="flex justify-between items-center w-[90%] ">

@@ -1,6 +1,4 @@
 import { Button, Card, CardBody, CardHeader, Divider, Input, Modal, ModalBody, ModalContent, ModalHeader, } from "@nextui-org/react"
-import NavbarAll from "../components/NavbarAll"
-import NavbarComponent from "../components/NavbarComponent"
 import { Link, useNavigate } from "react-router-dom"
 import { Controller, useForm } from "react-hook-form"
 import { boolean, z } from 'zod'
@@ -8,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { axiosinstance } from "../lib/axios"
 import { toast } from "sonner"
 import { useDispatch } from "react-redux"
-import SignUp from "./SignUp"
 import { useState } from "react"
 
 

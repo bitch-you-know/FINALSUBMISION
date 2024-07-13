@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { axiosinstance } from "../lib/axios";
 import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react";
-import NavbarAll from "../components/NavbarAll";
-import NavbarComponent from "../components/NavbarComponent";
+import Navbar from "../components/Navbar";
+
 
 const ListTrans = () => {
     const token = localStorage.getItem("token");
@@ -47,8 +47,8 @@ const ListTrans = () => {
 
     return (
         <div className=" flex flex-col bg-slate-300 h-screen ">
-            <NavbarAll />
-            <NavbarComponent />
+            <Navbar />
+           
             <div className="w-full flex justify-center  ">
                 <Table className="w-[90%]">
                     <TableHeader>

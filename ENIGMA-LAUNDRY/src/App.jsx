@@ -1,5 +1,4 @@
 import Login from "./pages/Login"
-import SignUp from "./pages/SignUp"
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import DashBoard from "./pages/DashBoard"
@@ -16,7 +15,6 @@ function App() {
       <Routes>
         <Route element={<Login />} path="/login" />
         <Route element={<DashBoard/>} path="/dashboard" />
-        <Route element={<SignUp />} path="/signup" />
         <Route element={<HomePage/>} path="/"  />
         <Route element={<ListCustomers/>} path="/customers"  />
         <Route element={<ListTrans/>} path="/trans"  />

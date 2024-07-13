@@ -1,9 +1,8 @@
 import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Modal, Input, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react"
 import { useEffect, useState } from "react";
 import { axiosinstance } from "../lib/axios";
-import NavbarAll from "../components/NavbarAll";
+import Navbar from "../components/Navbar";
 import { Controller, useForm } from 'react-hook-form';
-import NavbarComponent from "../components/NavbarComponent";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
 
@@ -96,8 +95,8 @@ const ListProduct = () => {
 
   return (
     <div className="flex flex-col  bg-slate-200 h-screen">
-      <NavbarAll />
-      <NavbarComponent />
+      <Navbar />
+      
       <div className="flex justify-end w-[95%] pt-4 " >
         <Button onClick={isOpenModal} color="primary" className=" font-semibold">Tambah product</Button>
       </div>
