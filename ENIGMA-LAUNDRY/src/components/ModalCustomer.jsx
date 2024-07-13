@@ -1,20 +1,26 @@
-import { Card, CardBody, CardHeader } from "@nextui-org/react"
 import { axiosinstance } from "../lib/axios"
-import { useEffect } from "react"
 import { Controller, useForm } from 'react-hook-form';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Checkbox, Link, Divider } from '@nextui-org/react';
 import { toast } from "sonner";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ModalCustomer =({isOpen,onClose})=>{
 
+
+const validateForm = z.object({
+    name: z.string().min(1),
+    phoneNumber: z.string().min(3),
+    address: z.string().min(1)
+})
 
 const form=useForm({
     defaultValues :{
         name : "",
         phoneNumber:"",
         address :""
-
-    }
+    },
+    resolver : zodResolver(validateForm)
 })
 
 

@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { axiosinstance } from "../lib/axios";
-import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Divider, Card } from "@nextui-org/react";
-import ModalTrans from "../components/ModalListTrans";
+import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react";
 import NavbarAll from "../components/NavbarAll";
 import NavbarComponent from "../components/NavbarComponent";
 
 const ListTrans = () => {
     const token = localStorage.getItem("token");
     const [trans, setTrans] = useState([]);
-
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [isOpenModal, setIsOpenModal] = useState(false);
 
     const getListTrans = async () => {
         try {
-            const result = await axiosinstance.get("bills",{
+            const result = await axiosinstance.get("bills", {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -37,7 +36,8 @@ const ListTrans = () => {
     }, []);
 
 
-    const openModal = () => {
+    const openModal = (transaction) => {
+        setSelectedTransaction(transaction);
         setIsOpenModal(true);
     };
 
@@ -46,43 +46,55 @@ const ListTrans = () => {
     };
 
     return (
+        <div className=" flex flex-col bg-slate-300 h-screen ">
+            <NavbarAll />
+            <NavbarComponent />
+            <div className="w-full flex justify-center  ">
+                <Table className="w-[90%]">
+                    <TableHeader>
+                        <TableColumn>CODE-REGIS</TableColumn>
+                        <TableColumn>NAMA</TableColumn>
+                        <TableColumn>ACTION</TableColumn>
+                    </TableHeader>
+                    <TableBody>
+                        {trans.map((data) => (
+                            <TableRow key={data.id} >
+                                <TableCell>{data.id}</TableCell>
+                                <TableCell>
+                                    <h1 className="font-semibold text-xl">{data.customer.name}</h1>
+                                    <p>{data.billDetails[0].qty} Transaksi</p>
+                                </TableCell>
+                                <TableCell>
+                                    <Button onClick={() => openModal(data)}>
+                                        <p>Detail Transaksi</p>
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
 
-      <div className="w-full">
-            <NavbarAll/>
-            <NavbarComponent/>
-           <Card>
-            <h1 className="pl-5">RIWAYAT TRANSAKSI</h1>
-           
-          <Table>
-            <TableHeader>
-                <TableColumn>CODE-REGIS</TableColumn>
-                <TableColumn>NAMA</TableColumn>
-                <TableColumn>ACTION</TableColumn>
-            </TableHeader>
-            <TableBody>
-                {trans.map((data) => (
-                    <TableRow >
-                        <TableCell>{data.id}</TableCell>
-                        <TableCell>
-                            <h1 className="font-semibold text-xl">{data.customer.name}</h1>
-                            <p>{data.billDetails[0].qty} Transaksi</p>
-                        </TableCell>
-                        <TableCell>
-                            <Button onClick={openModal}>
-                                <p>Detail Transaksi</p>
-                            </Button>
-                            <ModalTrans isOpen={isOpenModal} onClose={closeModal} />
-                        </TableCell>
-                    </TableRow>
-                    
-                ))}
-            </TableBody>
+                        ))}
+                    </TableBody>
 
-        </Table>
-        </Card>
-      </div>
+                </Table>
+            </div>
 
-  
+            <Modal isOpen={isOpenModal} onOpenChange={closeModal}>
+                <ModalContent>
+                    <ModalHeader>Detail Transaksi</ModalHeader>
+                    <ModalBody>
+                        {selectedTransaction && (
+                            <div>
+                                <p>ID: {selectedTransaction.id}</p>
+                                <p>Customer: {selectedTransaction.customer.name}</p>
+                                <p>Price: {selectedTransaction.billDetails[0].price}</p>
+                                {/* Tambahkan detail lainnya sesuai kebutuhan */}
+                            </div>
+                        )}
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+        </div>
+
+
     );
 };
 

@@ -78,8 +78,8 @@ const ListCustomers = () => {
               <TableCell>{list.address}</TableCell>
               <TableCell>{list.createdAt}</TableCell>
               <TableCell>
-                <Button color="primary">PAYMENT</Button>
-                <Button color="secondary" onClick={() => handleEditClick(list)}>
+
+                <Button onClick={() => handleEditClick(list)}>
                   EDITE
                 </Button>
                 <Button color="danger" onClick={() => deleteCustomers(list.id)}>
