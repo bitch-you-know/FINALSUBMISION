@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage"
 import ListCustomers from "./pages/ListCustomers"
 import ListTrans from "./pages/ListTrans"
 import ListProduct from "./pages/ListProduct"
+import ProtectedRoute from "./components/ProtectedRoute"
 function App() {
 
   return (
@@ -14,13 +15,13 @@ function App() {
       <Toaster position="top-center" />
       <Routes>
         <Route element={<Login />} path="/login" />
-        <Route element={<DashBoard/>} path="/dashboard" />
-        <Route element={<HomePage/>} path="/"  />
-        <Route element={<ListCustomers/>} path="/customers"  />
-        <Route element={<ListTrans/>} path="/trans"  />
-        <Route element={<ListProduct/>} path="/product" />
-        
+        <Route element={<ProtectedRoute element={<DashBoard />} />} path="/dashboard" />
+        <Route element={<ProtectedRoute element={<HomePage />} />} path="/" />
+        <Route element={<ProtectedRoute element={<ListCustomers />} />} path="/customers" />
+        <Route element={<ProtectedRoute element={<ListTrans />} />} path="/trans" />
+        <Route element={<ProtectedRoute element={<ListProduct />} />} path="/product" />
       </Routes>
+
     </div>
   )
 }

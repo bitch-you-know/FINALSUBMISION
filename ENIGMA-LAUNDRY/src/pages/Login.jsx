@@ -50,11 +50,11 @@ const Login = () => {
     //FORM CONTROL UNTUK MODAL SIGN UP EMPLOYE #117
     const formSignUp = useForm({
         defaultValues: {
-            name: "",
-            email: "",
-            username: "",
-            password: "",
-            role: ""
+            name:"",
+            email:"",
+            username:"",
+            password:"",
+            role:""
 
         }
     })
@@ -63,8 +63,11 @@ const Login = () => {
         try {
             const response = await axiosinstance.post("/auth/register", data)
             console.log(response)
+            toast.success("Register Succes !")
+             setOpenModal(false)
         } catch (error) {
-         console.log(error.massage)
+            console.log(error.massage)
+            toast.error("Register Failed")
         }
     }
 
@@ -74,6 +77,7 @@ const Login = () => {
     const onClose = () => {
         setOpenModal(false)
     }
+
 
     return (
         <div className="bg-home-login bg-cover bg-center min-h-screen">
@@ -105,7 +109,7 @@ const Login = () => {
                                     control={form.control}
                                     render={({ field, fieldState }) => {
                                         return (
-                                            <Input {...field} isInvalid={Boolean(fieldState.error)}
+                                            <Input type="password" {...field} isInvalid={Boolean(fieldState.error)}
                                                 errorMessage={fieldState.error?.message} />
                                         )
                                     }}
@@ -171,7 +175,7 @@ const Login = () => {
                                     control={formSignUp.control}
                                     render={({ field }) => {
                                         return (
-                                            <Input {...field} label="password" />
+                                            <Input type="password" {...field} label="password" />
                                         )
                                     }}
                                 />

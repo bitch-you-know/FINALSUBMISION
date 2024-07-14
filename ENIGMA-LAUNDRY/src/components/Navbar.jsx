@@ -1,16 +1,13 @@
 import { Avatar } from "@nextui-org/react"
+import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
 const Navbar = () => {
+const dispatch=useDispatch()
 
-    const navGate1 = useNavigate()
-
-    const handleNavbar = (path) => {
-        navGate1(path)
-
-    }
-
-
+const logout =()=>{
+    dispatch({ type: "LOGOUT" })
+}
 
     return (
         <div>
@@ -18,8 +15,11 @@ const Navbar = () => {
             <h1 className="text-3xl"><strong>Enigma Laundri</strong></h1>
 
             <div className="flex ">
-                <p className="pr-5 text-2xl">Admin</p>
                 <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                <div className="pl-4">
+                <p className="">Admin</p>
+                <p onClick={logout} className="text-sm">Logout</p>
+                </div>
             </div>
             
         </div>

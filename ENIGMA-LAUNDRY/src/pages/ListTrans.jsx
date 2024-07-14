@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { axiosinstance } from "../lib/axios";
-import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react";
+import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Modal, ModalContent, ModalHeader, ModalBody, useSelect } from "@nextui-org/react";
 import Navbar from "../components/Navbar";
+import { useSelector } from "react-redux";
 
 
 const ListTrans = () => {
-    const token = localStorage.getItem("token");
+    const token = useSelector((state)=>state.auth.token)
     const [trans, setTrans] = useState([]);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [isOpenModal, setIsOpenModal] = useState(false);
