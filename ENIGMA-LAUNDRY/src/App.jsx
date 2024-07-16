@@ -14,9 +14,9 @@ function App() {
     <div>
       <Toaster position="top-center" />
       <Routes>
+        <Route element={<HomePage />} path="/" />
         <Route element={<Login />} path="/login" />
         <Route element={<ProtectedRoute element={<DashBoard />} />} path="/dashboard" />
-        <Route element={<ProtectedRoute element={<HomePage />} />} path="/" />
         <Route element={<ProtectedRoute element={<ListCustomers />} />} path="/customers" />
         <Route element={<ProtectedRoute element={<ListTrans />} />} path="/trans" />
         <Route element={<ProtectedRoute element={<ListProduct />} />} path="/product" />

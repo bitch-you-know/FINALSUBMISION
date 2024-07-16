@@ -1,6 +1,6 @@
-import { Avatar } from "@nextui-org/react"
+import { Avatar ,Button} from "@nextui-org/react"
 import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 
 const Navbar = () => {
 const dispatch=useDispatch()
@@ -16,10 +16,10 @@ const logout =()=>{
 
             <div className="flex ">
                 <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                <div className="pl-4">
-                <p className="">Admin</p>
-                <p onClick={logout} className="text-sm">Logout</p>
-                </div>
+                
+                <p className="pr-4 pl-4">Admin</p>
+                <Button onClick={logout}  radius="none" size="sm" color="primary"  variant="ghost"><strong>LOGOUT</strong></Button>
+                
             </div>
             
         </div>
