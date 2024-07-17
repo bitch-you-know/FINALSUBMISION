@@ -12,6 +12,9 @@ const ListTrans = () => {
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [addModal, setAddModal] = useState(false)
+    const [selectedCustomerId, setSelectedCustomerId] = useState(""); // State untuk customer yang dipilih
+    const [selectedProductId, setSelectedProductId] = useState(""); // State untuk produk yang dipilih
+    const [selectedQty, setSelectedQty] = useState(1); // State untuk jumlah transaksi, default diatur ke 1
 
 
     //MENDAPATKAN LIST TRANSAKSI DARI API
@@ -29,6 +32,10 @@ const ListTrans = () => {
             console.log(error);
         }
     };
+
+
+    //GET CUSTOMERS
+    
     // FUNGSI UNTUK MODAL MENAMBAH LIST TRANSAKSI MODAL #131
     const addTransaction = async () => {
         try {
@@ -48,15 +55,14 @@ const ListTrans = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            toast.success("Transaksi Beerhasil di tambahkan")
-            setIsOpenModal(false);
-            getListTrans();
+            toast.success("Transaksi berhasil ditambahkan");
+            closeModal(); // Tutup modal setelah berhasil menambahkan transaksi
+            getListTrans(); // Muat ulang daftar transaksi untuk memperbarui tampilan
         } catch (error) {
             console.log(error);
-            toast.error("transaksi gagal di tambahkan")
+            toast.error("Transaksi gagal ditambahkan");
         }
     };
-
 
 
     useEffect(() => {
@@ -75,6 +81,7 @@ const ListTrans = () => {
         setIsOpenModal(false);
         setAddModal(false)
     };
+
 
     return (
         <div className=" flex flex-col bg-slate-300 h-screen ">
@@ -134,26 +141,52 @@ const ListTrans = () => {
             {/*>>>>>> MODAL UNTUK MENAMBAHKAN TRANSAKSI <<<<<*/}
             <Modal isOpen={addModal} onOpenChange={closeModal}>
                 <ModalContent>
-                    <ModalHeader>Tambahtransaksi baru</ModalHeader>
+                    <ModalHeader>Tambah Transaksi Baru</ModalHeader>
                     <ModalBody>
                         <div>
-                            <Input />
-                        </div>
-                        <div>
-                            <Select label="Pilih Customer">
-                                <SelectItem>asdas</SelectItem>
-                                <SelectItem>asdas</SelectItem>
+                            <Select
+                                label="Pilih Customer"
+                                onChange={(value) => handleCustomerIdChange(value)}
+                                value={selectedCustomerId}
+                            >
+                                {/* Pilihan customer disesuaikan dengan data yang Anda miliki */}
+                                {trans.map((data) => (
+                                    <SelectItem key={data.id} value={data.customer.id}>
+                                        {data.customer.name}
+                                    </SelectItem>
+                                ))}
                             </Select>
                         </div>
                         <div>
-                            <Select label="Pilih paket">
-                                <SelectItem></SelectItem>
+                            <Select
+                                label="Pilih Paket"
+                                onChange={(value) => handleProductChange(value)}
+                                value={selectedProductId}
+                            >
+                                {/* Pilihan produk disesuaikan dengan data yang Anda miliki */}
+                                {trans.map((data) => (
+                                    <SelectItem key={data.id} value={data.billDetails[0].product.id}>
+                                        {data.billDetails[0].product.name}
+                                    </SelectItem>
+                                ))}
                             </Select>
                         </div>
+                        <div>
+                           <Select
+                           label ="QTY" >
+                                   {trans.map((data)=>(
+                                    <SelectItem key={data.id} value={data.billDetails[0].qty}>
+                                       {data.billDetails.product}
+                                    </SelectItem>
+                                   ))}
+                           </Select>
+                        </div>
+                        <Button onClick={addTransaction} color="primary">
+                            Tambah Transaksi
+                        </Button>
                     </ModalBody>
                 </ModalContent>
             </Modal>
-
         </div>
 
 

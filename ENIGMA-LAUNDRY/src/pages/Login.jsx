@@ -54,7 +54,7 @@ const Login = () => {
             email:"",
             username:"",
             password:"",
-            role:""
+            role:"employee"
 
         }
     })
@@ -185,7 +185,7 @@ const Login = () => {
                                     control={formSignUp.control}
                                     render={({ field }) => {
                                         return (
-                                            <Input {...field} label="role" />
+                                            <Input  {...field} label="Employee" />
                                         )
                                     }}
                                 />
