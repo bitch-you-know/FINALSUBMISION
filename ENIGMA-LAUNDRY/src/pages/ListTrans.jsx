@@ -4,9 +4,6 @@ import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {z} from "zod"
 
 
 const ListTrans = () => {
@@ -22,22 +19,9 @@ const ListTrans = () => {
     const [customers, setCustomers] = useState([])
 
 
-  const transsaksiForSchema = z.object({
-    customerId: z.string().min(4),
-    productId: z.string().nonempty("Peket Laundry tidak boleh kosong"),
-    Qty: z.coerce.number().min(1)
-  })
+   
 
-  const formInput = useForm({
-    defaultValues: {
-        customerId: "",
-        productId: "",
-        Qty: ""
-    },
-    resolver: zodResolver(transsaksiForSchema)
-})
-
-    //MENDAPATKAN LIST TRANSAKSI DARI API
+    //GET TRANSAKSI
 
     const getListTrans = async () => {
         try {
@@ -90,23 +74,24 @@ const ListTrans = () => {
     }
 
     // FUNGSI UNTUK MODAL MENAMBAH LIST TRANSAKSI MODAL #131
-    const addTransaction = async (data) => {
+    const addTransaction = async () => {
         try {
             const payload = {
-                customerId: data.customerId,
+                customerId:selectedCustomerId,
                 billDetails: [
                     {
-                        product: 
-                           data.productId,
-                    
-                        qty: data.Qty
+                        product: {
+                             id :selectedProductId
+                        },
+
+                        qty: qty
                     }
                 ]
             }
 
-            // const result = await axiosinstance.post("bills", payload, {
-            //     headers: { Authorization: `Bearer ${token}` }
-            // });
+            const result = await axiosinstance.post("bills", payload, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             console.log(payload)
             toast.success("Transaksi berhasil ditambahkan");
             // closeModal(); // Tutup modal setelah berhasil menambahkan transaksi
@@ -198,58 +183,35 @@ const ListTrans = () => {
                 <ModalContent>
                     <ModalHeader>Tambah Transaksi Baru</ModalHeader>
                     <ModalBody>
-                            <form onSubmit={formInput.handleSubmit(addTransaction)}>
-                            <Controller
-                             name="customerId"
-                             control={formInput.control}
-                             render={({field,fieldState})=>{
-                                return (
-                                    <Select
-                                    {...field}
-                                    label="Pilih Customer"
-                                    
-                                    isInvalid={Boolean(fieldState.error)}
-                                >
-                                    {/* Pilihan customer disesuaikan dengan data yang Anda miliki */}
-                                    {customers.map((customer) => (
-                                        <SelectItem key={customer.id} >
-                                            {customer.name}
-                                        </SelectItem>
-                                    ))}
-                                </Select>
-                                )
-                             }}
-                            />
-                            
-                        
-                         <Controller
-                         name="productId"
-                         control={formInput.control}
-                         render={({field,fieldState})=>{
-                            return(
-                                <Select
-                                {...field}
-                                label="Pilih Paket"
-                                isInvalid={Boolean(fieldState.error)} 
-                            >
-                                {/* Pilihan produk disesuaikan dengan data yang Anda miliki */}
-                                {products.map((product) => (
-                                    <SelectItem key={product.id} value={product.id}>
-                                        "ssasss"
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                            )
-                         }}
-                         />
-                            <Input onChange={((e) => {
-                                return setQty(parseInt(e.target.value))
-                            })} label="Qty" />
-                        
+
+                        <Select  onChange={(event)=>{
+                                return setSelectedCustomerId(event.target.value)
+                        }}>
+                            {/* Pilihan customer disesuaikan dengan data yang Anda miliki */}
+                            {customers.map((customer) => (
+                                <SelectItem key={customer.id} >
+                                    {customer.name}
+                                </SelectItem>
+                            ))}
+                        </Select>
+                        <Select onChange={(event)=>{
+                              return setSelectedProductId(event.target.value)
+                        }} >
+                            {products.map((product) => (
+                                <SelectItem key={product.id}>
+                                   {product.name}
+                                </SelectItem>
+                            ))}
+                        </Select>
+
+                        <Input onChange={((e) => {
+                            return setQty(parseInt(e.target.value))
+                        })} label="Qty" />
+
                         <Button type="submit" onClick={addTransaction} color="primary">
                             Tambah Transaksi
                         </Button>
-                            </form>
+
                     </ModalBody>
                 </ModalContent>
             </Modal>
