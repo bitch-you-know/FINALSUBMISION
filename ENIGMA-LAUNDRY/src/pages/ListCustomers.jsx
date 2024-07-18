@@ -21,7 +21,7 @@ const ListCustomers = () => {
         },
       });
       setCustomers(result.data.data);  // Menyimpan data pelanggan ke state
-      console.log(result.data.data);
+      // console.log(result.data.data);
     } catch (error) {
       console.log(error.message);
     }

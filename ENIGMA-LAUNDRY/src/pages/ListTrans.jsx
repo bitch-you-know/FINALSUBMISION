@@ -94,8 +94,8 @@ const ListTrans = () => {
             });
             console.log(payload)
             toast.success("Transaksi berhasil ditambahkan");
-            // closeModal(); // Tutup modal setelah berhasil menambahkan transaksi
-            // getListTrans(); // Muat ulang daftar transaksi untuk memperbarui tampilan
+            closeModal(); // Tutup modal setelah berhasil menambahkan transaksi
+            getListTrans(); // Muat ulang daftar transaksi untuk memperbarui tampilan
         } catch (error) {
             console.log(error.message);
             toast.error("Transaksi gagal ditambahkan");
@@ -187,7 +187,7 @@ const ListTrans = () => {
                         <Select  onChange={(event)=>{
                                 return setSelectedCustomerId(event.target.value)
                         }}>
-                            {/* Pilihan customer disesuaikan dengan data yang Anda miliki */}
+                            {/* Pilihan customer disesuaikan dengan data */}
                             {customers.map((customer) => (
                                 <SelectItem key={customer.id} >
                                     {customer.name}
@@ -197,6 +197,7 @@ const ListTrans = () => {
                         <Select onChange={(event)=>{
                               return setSelectedProductId(event.target.value)
                         }} >
+                             {/* Pilihan customer disesuaikan dengan data */}
                             {products.map((product) => (
                                 <SelectItem key={product.id}>
                                    {product.name}

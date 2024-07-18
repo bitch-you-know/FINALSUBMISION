@@ -4,7 +4,7 @@ import "../style/CardStyle.css"
 import ListCustomers from "./ListCustomers"
 import { useState } from "react"
 import ModalCustomer from "../components/ModalCustomer"
-
+import { WithAuth } from "../hoc/WithAuth"
 
 
 
@@ -56,4 +56,4 @@ const closeModal=()=>{
     )
 }
 
-export default DashBoard
+export default WithAuth(DashBoard)
