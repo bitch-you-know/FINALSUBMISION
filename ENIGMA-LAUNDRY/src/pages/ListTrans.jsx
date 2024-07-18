@@ -4,6 +4,9 @@ import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {z} from "zod"
 
 
 const ListTrans = () => {
@@ -14,8 +17,25 @@ const ListTrans = () => {
     const [addModal, setAddModal] = useState(false)
     const [selectedCustomerId, setSelectedCustomerId] = useState(""); // State untuk customer yang dipilih
     const [selectedProductId, setSelectedProductId] = useState(""); // State untuk produk yang dipilih
-    const [selectedQty, setSelectedQty] = useState(1); // State untuk jumlah transaksi, default diatur ke 1
+    const [qty, setQty] = useState(1); // State untuk jumlah transaksi, default diatur ke 1
+    const [products, setProducts] = useState([])
+    const [customers, setCustomers] = useState([])
 
+
+  const transsaksiForSchema = z.object({
+    customerId: z.string().min(4),
+    productId: z.string().nonempty("Peket Laundry tidak boleh kosong"),
+    Qty: z.coerce.number().min(1)
+  })
+
+  const formInput = useForm({
+    defaultValues: {
+        customerId: "",
+        productId: "",
+        Qty: ""
+    },
+    resolver: zodResolver(transsaksiForSchema)
+})
 
     //MENDAPATKAN LIST TRANSAKSI DARI API
 
@@ -26,40 +46,73 @@ const ListTrans = () => {
             });
 
             setTrans(result.data.data);
-            console.log(result.data.data)
+
             //   console.log(result.data.data)
         } catch (error) {
             console.log(error);
         }
     };
 
+    //GET PRODUCT
+    const getProduk = async () => {
+        try {
+            const result = await axiosinstance.get("/products",
+                {
+                    headers:
+                        { Authorization: `Bearer ${token}` }
+                }
+            )
+
+            setProducts(result.data.data)
+            // if (res.data.status.code == 200) {
+            //     setDataProduk(res.data.data)
+            // }
+        } catch (error) {
+            console.log(error.message);
+            toast.error("error")
+        }
+    }
+
 
     //GET CUSTOMERS
-    
-    // FUNGSI UNTUK MODAL MENAMBAH LIST TRANSAKSI MODAL #131
-    const addTransaction = async () => {
+    const getCustomer = async () => {
         try {
-            const formData = {
-                customerId: selectedCustomerId,
+            const result = await axiosinstance.get("/customers",
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            )
+
+            setCustomers(result.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // FUNGSI UNTUK MODAL MENAMBAH LIST TRANSAKSI MODAL #131
+    const addTransaction = async (data) => {
+        try {
+            const payload = {
+                customerId: data.customerId,
                 billDetails: [
                     {
-                        product: {
-                            id: selectedProductId
-                        },
-                        qty: selectedQty
+                        product: 
+                           data.productId,
+                    
+                        qty: data.Qty
                     }
                 ]
-            };
+            }
 
-            const result = await axiosinstance.post("bills", formData, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-
+            // const result = await axiosinstance.post("bills", payload, {
+            //     headers: { Authorization: `Bearer ${token}` }
+            // });
+            console.log(payload)
             toast.success("Transaksi berhasil ditambahkan");
-            closeModal(); // Tutup modal setelah berhasil menambahkan transaksi
-            getListTrans(); // Muat ulang daftar transaksi untuk memperbarui tampilan
+            // closeModal(); // Tutup modal setelah berhasil menambahkan transaksi
+            // getListTrans(); // Muat ulang daftar transaksi untuk memperbarui tampilan
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             toast.error("Transaksi gagal ditambahkan");
         }
     };
@@ -67,6 +120,8 @@ const ListTrans = () => {
 
     useEffect(() => {
         getListTrans();
+        getProduk();
+        getCustomer();
     }, []);
 
     const openModal = (transaction) => {
@@ -89,7 +144,7 @@ const ListTrans = () => {
             <div className="flex justify-end w-[95%] pt-4">
                 <Button onClick={openModalAdd} color="primary" ><strong>Tambah Transaksi</strong></Button>
             </div>
-            <div className="w-full flex justify-center  ">
+            <div className="w-full flex justify-center">
 
                 <Table className="w-[90%]">
                     <TableHeader>
@@ -143,47 +198,58 @@ const ListTrans = () => {
                 <ModalContent>
                     <ModalHeader>Tambah Transaksi Baru</ModalHeader>
                     <ModalBody>
-                        <div>
-                            <Select
-                                label="Pilih Customer"
-                                onChange={(value) => handleCustomerIdChange(value)}
-                                value={selectedCustomerId}
-                            >
-                                {/* Pilihan customer disesuaikan dengan data yang Anda miliki */}
-                                {trans.map((data) => (
-                                    <SelectItem key={data.id} value={data.customer.id}>
-                                        {data.customer.name}
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                        </div>
-                        <div>
-                            <Select
+                            <form onSubmit={formInput.handleSubmit(addTransaction)}>
+                            <Controller
+                             name="customerId"
+                             control={formInput.control}
+                             render={({field,fieldState})=>{
+                                return (
+                                    <Select
+                                    {...field}
+                                    label="Pilih Customer"
+                                    
+                                    isInvalid={Boolean(fieldState.error)}
+                                >
+                                    {/* Pilihan customer disesuaikan dengan data yang Anda miliki */}
+                                    {customers.map((customer) => (
+                                        <SelectItem key={customer.id} >
+                                            {customer.name}
+                                        </SelectItem>
+                                    ))}
+                                </Select>
+                                )
+                             }}
+                            />
+                            
+                        
+                         <Controller
+                         name="productId"
+                         control={formInput.control}
+                         render={({field,fieldState})=>{
+                            return(
+                                <Select
+                                {...field}
                                 label="Pilih Paket"
-                                onChange={(value) => handleProductChange(value)}
-                                value={selectedProductId}
+                                isInvalid={Boolean(fieldState.error)} 
                             >
                                 {/* Pilihan produk disesuaikan dengan data yang Anda miliki */}
-                                {trans.map((data) => (
-                                    <SelectItem key={data.id} value={data.billDetails[0].product.id}>
-                                        {data.billDetails[0].product.name}
+                                {products.map((product) => (
+                                    <SelectItem key={product.id} value={product.id}>
+                                        "ssasss"
                                     </SelectItem>
                                 ))}
                             </Select>
-                        </div>
-                        <div>
-                           <Select
-                           label ="QTY" >
-                                   {trans.map((data)=>(
-                                    <SelectItem key={data.id} value={data.billDetails[0].qty}>
-                                       {data.billDetails.product}
-                                    </SelectItem>
-                                   ))}
-                           </Select>
-                        </div>
-                        <Button onClick={addTransaction} color="primary">
+                            )
+                         }}
+                         />
+                            <Input onChange={((e) => {
+                                return setQty(parseInt(e.target.value))
+                            })} label="Qty" />
+                        
+                        <Button type="submit" onClick={addTransaction} color="primary">
                             Tambah Transaksi
                         </Button>
+                            </form>
                     </ModalBody>
                 </ModalContent>
             </Modal>
