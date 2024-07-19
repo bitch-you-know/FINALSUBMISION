@@ -19,7 +19,7 @@ const ListTrans = () => {
     const [customers, setCustomers] = useState([])
 
 
-   
+
 
     //GET TRANSAKSI
 
@@ -77,11 +77,11 @@ const ListTrans = () => {
     const addTransaction = async () => {
         try {
             const payload = {
-                customerId:selectedCustomerId,
+                customerId: selectedCustomerId,
                 billDetails: [
                     {
                         product: {
-                             id :selectedProductId
+                            id: selectedProductId
                         },
 
                         qty: qty
@@ -112,9 +112,11 @@ const ListTrans = () => {
     const openModal = (transaction) => {
         setSelectedTransaction(transaction);
         setIsOpenModal(true);
+        console.log(transaction)
     };
     const openModalAdd = () => {
         setAddModal(true)
+
     }
 
     const closeModal = () => {
@@ -170,7 +172,11 @@ const ListTrans = () => {
                                 <p>Customer:     {selectedTransaction.customer.name}</p><Divider />
                                 <p>phoneNumber : {selectedTransaction.customer.phoneNumber}</p><Divider />
                                 <p>Jenis Paket : {selectedTransaction.billDetails[0].product.name}</p>
-                                <p>Price:        {selectedTransaction.billDetails[0].price}</p><Divider />
+                                <p>Price:
+                                    {(
+                                        selectedTransaction.billDetails[0].price * selectedTransaction.billDetails[0].qty
+                                    ).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                                </p><Divider />
 
                             </div>
                         )}
@@ -184,8 +190,8 @@ const ListTrans = () => {
                     <ModalHeader>Tambah Transaksi Baru</ModalHeader>
                     <ModalBody>
 
-                        <Select  onChange={(event)=>{
-                                return setSelectedCustomerId(event.target.value)
+                        <Select onChange={(event) => {
+                            return setSelectedCustomerId(event.target.value)
                         }}>
                             {/* Pilihan customer disesuaikan dengan data */}
                             {customers.map((customer) => (
@@ -194,13 +200,13 @@ const ListTrans = () => {
                                 </SelectItem>
                             ))}
                         </Select>
-                        <Select onChange={(event)=>{
-                              return setSelectedProductId(event.target.value)
+                        <Select onChange={(event) => {
+                            return setSelectedProductId(event.target.value)
                         }} >
-                             {/* Pilihan customer disesuaikan dengan data */}
+                            {/* Pilihan customer disesuaikan dengan data */}
                             {products.map((product) => (
                                 <SelectItem key={product.id}>
-                                   {product.name}
+                                    {product.name}
                                 </SelectItem>
                             ))}
                         </Select>
