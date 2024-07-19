@@ -124,7 +124,7 @@ const ListTrans = () => {
 
 
     return (
-        <div className=" flex flex-col bg-slate-300 h-screen ">
+        <div className=" flex flex-col bg-slate-200 h-screen ">
             <Navbar />
             <div className="flex justify-end w-[95%] pt-4">
                 <Button onClick={openModalAdd} color="primary" ><strong>Tambah Transaksi</strong></Button>

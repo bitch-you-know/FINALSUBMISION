@@ -13,8 +13,6 @@ const DashBoard = () => {
 
 const [openModal,setOpenModal]=useState()
 
-
-
 const openClick=()=>{
     setOpenModal(true)
 }
@@ -24,7 +22,9 @@ const closeModal=()=>{
 
 
     return (
-        <div className="flex flex-col justify-content-center bg-slate-200" >
+        <div className="flex flex-col justify-content-center bg-slate-200 h-screen" >
+
+           
             <Navbar />
             
 
