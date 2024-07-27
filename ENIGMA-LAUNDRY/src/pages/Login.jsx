@@ -32,7 +32,7 @@ const Login = () => {
 
     const submitLogin = async (data) => {
         try {
-            const result = await axiosinstance.post("/auth/login", data)
+            const result = await axiosinstance.post("auth/login", data)
             const statusCode = result.data.status.code
             const token = result.data.data.token
             if (statusCode === 201) {
