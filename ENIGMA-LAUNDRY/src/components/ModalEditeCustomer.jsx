@@ -1,4 +1,3 @@
-import { Card, CardBody, CardHeader } from "@nextui-org/react"
 import { axiosinstance } from "../lib/axios"
 import { useEffect } from "react"
 import { Controller, useForm } from 'react-hook-form';
@@ -18,7 +17,7 @@ const ModalEditeCustomer = ({ handleFetchData, customer }) => {
 
   const token = localStorage.getItem("token");
 
-  const resultSubmit = async (data) => {
+  const addSubmit = async (data) => {
     try {
       const response = await axiosinstance.put("/customers", data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -52,7 +51,7 @@ const ModalEditeCustomer = ({ handleFetchData, customer }) => {
             </ModalHeader>
 
             <ModalBody>
-              <form onSubmit={handleSubmit(resultSubmit)}>
+              <form onSubmit={handleSubmit(addSubmit)}>
                 <Controller
                   name="name"
                   control={control}
@@ -88,7 +87,7 @@ const ModalEditeCustomer = ({ handleFetchData, customer }) => {
                   Cancel
                 </Button>
                 <Button type="submit" color="primary">
-                  Tambah Orderan
+                  ADD
                 </Button>
               </form>
             </ModalBody>

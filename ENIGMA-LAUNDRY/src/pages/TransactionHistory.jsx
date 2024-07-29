@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import { toast } from "sonner";
 
 
-const ListTrans = () => {
+const TransactionHistory = () => {
     const token = useSelector((state) => state.auth.token)
-    const [trans, setTrans] = useState([]);
+    const [transactions, setTranstactions] = useState([]);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [addModal, setAddModal] = useState(false)
@@ -29,7 +29,7 @@ const ListTrans = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            setTrans(result.data.data);
+            setTranstactions(result.data.data);
 
             //   console.log(result.data.data)
         } catch (error) {
@@ -48,9 +48,6 @@ const ListTrans = () => {
             )
 
             setProducts(result.data.data)
-            // if (res.data.status.code == 200) {
-            //     setDataProduk(res.data.data)
-            // }
         } catch (error) {
             console.log(error.message);
             toast.error("error")
@@ -129,7 +126,7 @@ const ListTrans = () => {
         <div className=" flex flex-col bg-slate-200 h-screen ">
             <Navbar />
             <div className="flex justify-end w-[95%] pt-4">
-                <Button onClick={openModalAdd} color="primary" ><strong>Tambah Transaksi</strong></Button>
+                <Button onClick={openModalAdd} color="primary" className="mt-2 font-semibold" >Tambah Transaksi</Button>
             </div>
             <div className="w-full flex justify-center">
 
@@ -140,15 +137,15 @@ const ListTrans = () => {
                         <TableColumn>ACTION</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {trans.map((data) => (
-                            <TableRow key={data.id} >
-                                <TableCell>{data.id}</TableCell>
+                        {transactions.map((transaction) => (
+                            <TableRow key={transaction.id} >
+                                <TableCell>{transaction.id}</TableCell>
                                 <TableCell>
-                                    <h1 className="font-semibold text-xl">{data.customer.name}</h1>
-                                    <p>{data.billDetails[0].qty} Transaksi</p>
+                                    <h1 className="font-semibold text-xl">{transaction.customer.name}</h1>
+                                    <p>{transaction.billDetails[0].qty} Transaksi</p>
                                 </TableCell>
                                 <TableCell>
-                                    <Button onClick={() => openModal(data)}>
+                                    <Button onClick={() => openModal(transaction)}>
                                         <p>Detail Transaksi</p>
                                     </Button>
                                 </TableCell>
@@ -172,7 +169,7 @@ const ListTrans = () => {
                                 <p>Customer:     {selectedTransaction.customer.name}</p><Divider />
                                 <p>phoneNumber : {selectedTransaction.customer.phoneNumber}</p><Divider />
                                 <p>Jenis Paket : {selectedTransaction.billDetails[0].product.name}</p>
-                                <p>Price:
+                                <p>total pembayaran:
                                     {(
                                         selectedTransaction.billDetails[0].price * selectedTransaction.billDetails[0].qty
                                     ).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
@@ -224,8 +221,8 @@ const ListTrans = () => {
             </Modal>
         </div>
 
-
+ 
     );
 };
 
-export default ListTrans;
+export default TransactionHistory;

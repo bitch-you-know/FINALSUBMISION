@@ -1,107 +1,90 @@
-import { axiosinstance } from "../lib/axios"
+import { axiosinstance } from "../lib/axios";
 import { Controller, useForm } from 'react-hook-form';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Checkbox, Link, Divider } from '@nextui-org/react';
-import { toast } from "sonner";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Modal, ModalContent, ModalHeader, ModalBody, Button, Input } from '@nextui-org/react';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import PropTypes from 'prop-types';
+import { useSelector } from "react-redux";
+import { customerContext } from "../contexts/CustomerContex";
 
-const ModalCustomer =({isOpen,onClose})=>{
+const ModalCustomer = ({ isOpen, onClose }) => {
+  const token = useSelector((state) => state.auth.token)
 
+  const { customers, getListCustomers } = customerContext();
 
-const validateForm = z.object({
+  const validateForm = z.object({
     name: z.string().min(1),
     phoneNumber: z.string().min(3),
-    address: z.string().min(1)
-})
+    address: z.string().min(1),
+  });
 
-const form=useForm({
-    defaultValues :{
-        name : "",
-        phoneNumber:"",
-        address :""
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: '',
+      phoneNumber: '',
+      address: '',
     },
-    resolver : zodResolver(validateForm)
-})
+    resolver: zodResolver(validateForm),
+  });
 
 
-
- const token =localStorage.getItem("token")
- 
-const resultSubmit= async (data)=>{
+  // POST DATA BARU DI DASHBOARD  FORM  #47
+  const resultSubmit = async (data) => {
     try {
-        const response = await axiosinstance.post("/customers",data,{
-            headers :{ Authorization :`Bearer ${token}`}
-        })
-        console.log(response)
-        toast.success("Customer Berhasil di Tambahkan")
+      const response = await axiosinstance.post('/customers', data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(response);
+      toast.success('Customer Berhasil di Tambahkan');
+      reset();
+      onClose();
+      getListCustomers()
 
     } catch (error) {
-        console.log(error.message)
+      console.log(error.message);
     }
-}
+  };
 
-
-    return(
-          <div>
-             <Modal isOpen={isOpen} onOpenChange={onClose}>
+  return (
+    <div>
+      <Modal isOpen={isOpen} onOpenChange={onClose}>
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 bg-slate-700 text-white" >Transaksi Baru</ModalHeader>
-
-              <ModalBody>
-                <form onSubmit={form.handleSubmit(resultSubmit)}>
-                  <Controller
-                    name='name'
-                    control={form.control}
-                    render={({ field }) => {
-                      return (
-                        <Input {...field}
-                          label="Nama"
-                          variant="bordered"
-                        />
-                      )
-                    }}
-                  />
-                  <Controller
-                    name='phoneNumber'
-                    control={form.control}
-                    render={({ field }) => {
-                      return (
-                        <Input {...field}
-                          label="PhoneNumber"
-                          variant="bordered"
-                          type='number'
-                        />
-                      )
-                    }}
-                  />
-                  <Controller
-                    name='address'
-                    control={form.control}
-                    render={({ field }) => {
-                      return (
-                        <Input {...field}
-                          label="Alamat"
-                          variant="bordered"
-                         
-                        />
-                      )
-                    }}
-                  />
-                  <Button color="danger" variant="flat" onPress={onClose}>
-                    Cancel
-                  </Button>
-                  <Button type='submit' color="primary" >
-                    Tambah Orderan
-                  </Button >
-                </form>
-              </ModalBody>
-            </>
-          )}
+          <ModalHeader className="flex flex-col gap-1 bg-slate-700 text-white">Transaksi Baru</ModalHeader>
+          <ModalBody>
+            <form onSubmit={handleSubmit(resultSubmit)}>
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => <Input {...field} label="Nama" variant="bordered" />}
+              />
+              <Controller
+                name="phoneNumber"
+                control={control}
+                render={({ field }) => <Input {...field} label="PhoneNumber" variant="bordered" type="number" />}
+              />
+              <Controller
+                name="address"
+                control={control}
+                render={({ field }) => <Input {...field} label="Alamat" variant="bordered" />}
+              />
+              <Button color="danger" variant="flat" onPress={onClose}>
+                Cancel
+              </Button>
+              <Button type="submit" color="primary">
+                Tambah Orderan
+              </Button>
+            </form>
+          </ModalBody>
         </ModalContent>
       </Modal>
-          </div>
-    )
-}
-export default ModalCustomer
+    </div>
+  );
+};
+
+ModalCustomer.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+export default ModalCustomer;

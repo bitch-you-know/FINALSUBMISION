@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { toast } from "sonner";
 
 
-const ListProduct = () => {
+const PackageList = () => {
 
   const [products, setProducts] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -142,18 +142,18 @@ const ListProduct = () => {
         <Table className="flex justify-center w-[90%]">
           <TableHeader>
             <TableColumn>NO</TableColumn>
+            <TableColumn>CODE-REGIS</TableColumn>
             <TableColumn>JENIS PAKET</TableColumn>
-            <TableColumn>HARGA</TableColumn>
-            <TableColumn>BERAT (KG)</TableColumn>
+            <TableColumn>HARGA PER(KG)</TableColumn>
             <TableColumn>ACTION</TableColumn>
           </TableHeader>
           <TableBody>
-            {products.map((list, index) => (
-              <TableRow key={list.id}>
+            {products.map((product, index) => (
+              <TableRow key={product.id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{list.id}</TableCell>
-                <TableCell>{list.name}</TableCell>
-                <TableCell>{list.price}</TableCell>
+                <TableCell>{product.id}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.price}</TableCell>
                 <TableCell className="flex">
                   <Button onClick={() => openModalEdite(list)}>EDITE</Button>
                   <Button color="danger" onClick={() => deleteData(list.id)}>DELETE</Button>
@@ -244,4 +244,4 @@ const ListProduct = () => {
   );
 }
 
-export default ListProduct;
+export default PackageList;

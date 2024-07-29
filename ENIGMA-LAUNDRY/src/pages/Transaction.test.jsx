@@ -1,19 +1,19 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import ListTrans from "./ListTrans";
+import TransactionHistory from "./TransactionHistory.jsx";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { reducers } from "../store/store";
+import { reducers } from "../store/store.js";
 import { BrowserRouter } from "react-router-dom";
 
 const store = createStore(reducers);
 
-describe("ListTrans", () => {
+describe("TransactionHistory", () => {
     it("shoud render component", () => {
         const { container } = render(
             <Provider store={store}>
                 <BrowserRouter>
-                    <ListTrans />
+                    <TransactionHistory />
                 </BrowserRouter>
             </Provider>
         );
