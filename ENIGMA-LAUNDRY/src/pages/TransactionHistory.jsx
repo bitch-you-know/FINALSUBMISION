@@ -125,7 +125,7 @@ const TransactionHistory = () => {
     return (
         <div className=" flex flex-col bg-slate-200 h-screen ">
             <Navbar />
-            <div className="flex justify-end w-[95%] pt-4">
+            <div className="flex justify-end w-[95%] pt-2">
                 <Button onClick={openModalAdd} color="primary" className="mt-2 font-semibold" >Tambah Transaksi</Button>
             </div>
             <div className="w-full flex justify-center">

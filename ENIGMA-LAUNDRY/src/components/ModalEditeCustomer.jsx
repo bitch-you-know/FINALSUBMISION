@@ -56,7 +56,7 @@ const ModalEditeCustomer = ({ handleFetchData, customer }) => {
                   name="name"
                   control={control}
                   render={({ field }) => (
-                    <Input {...field} label="Nama" variant="bordered" />
+                    <Input {...field} label="Nama" variant="bordered" data-testid="customer-modal-name-input" />
                   )}
                 />
                 <Controller
@@ -68,6 +68,7 @@ const ModalEditeCustomer = ({ handleFetchData, customer }) => {
                       label="PhoneNumber"
                       variant="bordered"
                       type="text"
+                      data-testid="customer-modal-phone-input"
                     />
                   )}
                 />
@@ -80,13 +81,14 @@ const ModalEditeCustomer = ({ handleFetchData, customer }) => {
                       label="Alamat"
                       variant="bordered"
                       type="text"
+                      data-testid="customer-modal-address-input"
                     />
                   )}
                 />
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button type="submit" color="primary">
+                <Button type="submit" color="primary"  data-testid="customer-modal-submit">
                   ADD
                 </Button>
               </form>

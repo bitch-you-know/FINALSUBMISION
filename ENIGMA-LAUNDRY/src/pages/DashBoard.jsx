@@ -1,8 +1,8 @@
-import { Button } from "@nextui-org/react"
+import { Button, Spinner } from "@nextui-org/react"
 import Navbar from "../components/Navbar"
 import "../style/CardStyle.css"
 import ListCustomers from "../components/ListCustomers"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import ModalCustomer from "../components/ModalCustomer"
 import { WithAuth } from "../hoc/WithAuth"
 import { CustomerProvider } from "../contexts/CustomerContex"
@@ -31,7 +31,7 @@ const DashBoard = () => {
                 <Navbar />
 
 
-                <header className="flex justify-center items-center w-full p-4 pb-1 ">
+                <header className="flex justify-center items-center w-full pt-1 pb-1 ">
                     <div className="flex justify-between items-center w-[90%] ">
                         <div >
                             <p>Selamat Datang <strong>Admin</strong></p>
@@ -50,7 +50,7 @@ const DashBoard = () => {
                 </main>
                 <footer className="flex justify-center w-full p-4 pt-1">
                     <div className="flex flex-col justify-between items-center w-[90%] ">
-                        <h1 className="font-bold text-2xl">Customer List</h1>
+                        <h1 className="font-bold text-2xl" data-testid="customer-title">Customer List</h1>
                         <ListCustomers />
                         <br />
                     </div>

@@ -1,65 +1,53 @@
-// src/components/ListCustomers.js
 import { customerContext } from '../contexts/CustomerContex';
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Button, Modal, ModalHeader, ModalBody } from '@nextui-org/react';
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Button, Modal, ModalHeader, ModalBody, ModalContent } from '@nextui-org/react';
 import { toast } from 'sonner';
 import ModalEditeCustomer from './ModalEditeCustomer';
 import { useEffect, useState } from 'react';
 import { axiosinstance } from '../lib/axios';
 import { useSelector } from 'react-redux';
-9
 
 const ListCustomers = () => {
   const { customers, getListCustomers } = customerContext(); // Mengambil data customer dan fungsi update/pembaruan dari context 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const token = useSelector(state => state.auth.token)
-  const [isOpenDelete,setIsopenDelete]=useState(false)
+  const [customerToDelete, setCustomerToDelete] = useState(null);
+  const token = useSelector(state => state.auth.token);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
 
-
-  
-
-  // Fungsi Delet  dari #58
-  const deleteCustomers = async (id) => {
+  // Fungsi Delet
+  const deleteCustomers = async () => {
     try {
-      await axiosinstance.delete(`/customers/${id}`, {
+      await axiosinstance.delete(`/customers/${customerToDelete}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Sukses delete');
       getListCustomers(); // Memperbarui daftar pelanggan setelah penghapusan
+      closeModal(); // Menutup modal setelah penghapusan
     } catch (error) {
       console.log(error.message);
     }
   };
 
- 
-
-  
-  //fungsi ini di triger dari  #57   untuk membawa parameter lalu di set pada setSelectedCustomer
-  // lalu state yang sudah di buat selectccustomer tersebut di lempar melalui prop customer di #66
+  // Fungsi ini di triger untuk membawa parameter lalu di set pada setSelectedCustomer
+  // lalu state yang sudah di buat selectccustomer tersebut di lempar melalui prop customer
   const handleEditClick = (customer) => {
     setSelectedCustomer(customer);
     setOpenModal(true);
   };
-  const handleDeleteClick =(id)=>{
-     setIsopenDelete(true)
-     console.log("status",isOpenDelete)
-  }
-  const closeModal =()=>{
-      setIsopenDelete(false)
-  }
-  const confirmDelete = () => {
-    if (customerToDelete) {
-      deleteCustomers(customerToDelete);
-    }
-    closeModal();
+
+  const handleDeleteClick = (id) => {
+    setCustomerToDelete(id);
+    setIsOpenDelete(true);
+  };
+
+  const closeModal = () => {
+    setIsOpenDelete(false);
   };
 
   const handleFetchDataAndCloseModal = () => {
     getListCustomers();
     setOpenModal(false);
   };
-
- 
 
   return (
     <div className="w-full">
@@ -81,25 +69,31 @@ const ListCustomers = () => {
               <TableCell>{customer.address}</TableCell>
               <TableCell>{customer.createdAt}</TableCell>
               <TableCell>
-                <Button onClick={() => handleEditClick(customer)}>EDIT</Button>
-                <Button color="danger" onClick={() => handleDeleteClick(customer.id)} data-testid={`delete-customer-button-${customer.id}`}>DELETE</Button>
+                <Button onClick={() => handleEditClick(customer) } data-testid={`edit-customer-button-${customer.id}`} >EDIT</Button>
+                <Button color="danger" onClick={() => handleDeleteClick(customer.id)} data-testid={`delete-customer-button-${customer.id}`} >DELETE</Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Modal isOpen={openModal} onOpenChange={() => setOpenModal(false)}>
+     {/* MODAL UNTUK EDIT CUSTOMER */}
+      <Modal isOpen={openModal} onOpenChange={() => setOpenModal(false)} data-testid="customer-modal" >
         <ModalEditeCustomer handleFetchData={handleFetchDataAndCloseModal} customer={selectedCustomer} />
       </Modal>
-      <Modal isOpen={isOpenDelete} onOpenChange={closeModal} >
-        <ModalHeader>Are you sure ?</ModalHeader>
-        <ModalBody>
-          <Button>cancle</Button>
-          <Button>sure</Button>
-        </ModalBody>
+      <Modal isOpen={isOpenDelete} onClose={closeModal}>
+        <ModalContent>
+          <ModalHeader>Are you sure?</ModalHeader>
+          <ModalBody>
+            <div className="flex justify-between">
+              <Button onClick={closeModal} color="primary" data-testid='cancel-delete-button'>Cancel</Button>
+              <Button onClick={deleteCustomers} color="danger" data-testid='confirm-delete-button'>Yes</Button>
+            </div>
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </div>
   );
 };
 
 export default ListCustomers;
+

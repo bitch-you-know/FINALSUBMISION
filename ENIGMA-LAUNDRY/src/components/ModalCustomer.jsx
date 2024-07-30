@@ -52,7 +52,7 @@ const ModalCustomer = ({ isOpen, onClose }) => {
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1 bg-slate-700 text-white">Transaksi Baru</ModalHeader>
           <ModalBody>
-            <form onSubmit={handleSubmit(resultSubmit)}>
+            <form onSubmit={handleSubmit(resultSubmit)} >
               <Controller
                 name="name"
                 control={control}
@@ -72,7 +72,7 @@ const ModalCustomer = ({ isOpen, onClose }) => {
               <Button color="danger" variant="flat" onPress={onClose}>
                 Cancel
               </Button>
-              <Button  type="submit" color="primary" data-testid="add-customer-button">
+              <Button  type="submit" color="primary" data-testid="customer-modal-submit">
                 Tambah Orderan
               </Button>
             </form>
