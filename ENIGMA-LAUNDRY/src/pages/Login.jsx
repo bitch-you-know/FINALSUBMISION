@@ -39,7 +39,7 @@ const Login = () => {
                 dispatch({ type: "SET_TOKEN", token: token })
                 toast.success("login succes")
 
-                navigate("/dashboard")
+                navigate("/")
             }
             console.log(token)
         } catch (error) {
@@ -85,7 +85,9 @@ const Login = () => {
             <div className="flex h-screen items-center justify-center mt-0">
                 <Card className="w-[400px] ">
                     <div>
-                        <CardHeader className="font-semibold text-lg">LOGIN DASHBOARD ADMIN !</CardHeader>
+                        <CardHeader className="font-semibold text-lg">
+                            <h2 data-testid="login-title">Login</h2>
+                        </CardHeader>
                         <Divider />
 
                         <CardBody className="flex flex-col  gap-4">
@@ -99,7 +101,8 @@ const Login = () => {
                                     render={({ field, fieldState }) => {
                                         return (
                                             <Input {...field} isInvalid={Boolean(fieldState.error)}
-                                                errorMessage={fieldState.error?.message} />
+                                                errorMessage={fieldState.error?.message} 
+                                                data-testid="username-input"/>
                                         )
                                     }}
                                 />
@@ -110,11 +113,13 @@ const Login = () => {
                                     render={({ field, fieldState }) => {
                                         return (
                                             <Input type="password" {...field} isInvalid={Boolean(fieldState.error)}
-                                                errorMessage={fieldState.error?.message} />
+                                                errorMessage={fieldState.error?.message} 
+                                                data-testid="password-input"/>
                                         )
                                     }}
                                 />
-                                <Button type="submit" color="primary">Login</Button>
+                                <Button type="submit" color="primary"
+                                data-testid="login-button">Login</Button>
                             </form>
 
 
@@ -143,9 +148,10 @@ const Login = () => {
                                 <Controller
                                     name="name"
                                     control={formSignUp.control}
+                                    data-testid="username-input"
                                     render={({ field }) => {
                                         return (
-                                            <Input {...field} label="name" />
+                                            <Input  {...field} label="name" />
                                         )
                                     }}
                                 />

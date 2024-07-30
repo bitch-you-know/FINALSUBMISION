@@ -26,7 +26,7 @@ const logout =()=>{
         <div className="flex justify-center bg-slate-400 h-10 text-center">
 
                 <div className="flex items-center text-center p-5">
-                    <strong><Link to={"/dashboard"}>DASHBOARD</Link></strong>
+                    <strong><Link to={"/"}>DASHBOARD</Link></strong>
                 </div>
                 <div className="flex items-center text-center p-5" >
                     <strong><Link to={"/trans"}>RIWAYAT TRANSAKSI</Link></strong>

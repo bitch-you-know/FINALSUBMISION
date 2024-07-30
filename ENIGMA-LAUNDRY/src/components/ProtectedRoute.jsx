@@ -11,7 +11,7 @@ const ProtectedRoute = ({ element}) => {
 
   // Jika pengguna diautentikasi, render elemen yang diberikan
   // Jika tidak, arahkan pengguna ke halaman login
-  return isAuthenticated ? element : <Navigate to="/" />;
+  return isAuthenticated ? element : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

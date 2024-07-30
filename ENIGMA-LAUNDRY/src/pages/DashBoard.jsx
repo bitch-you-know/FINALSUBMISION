@@ -38,7 +38,7 @@ const DashBoard = () => {
                             <h2 className="text-3xl"><strong>DASHBOARD</strong></h2>
                         </div>
                         <div>
-                            <Button onClick={openClick} color="primary" className="mt-2 font-semibold">+ Order Baru</Button>
+                            <Button  onClick={openClick} color="primary" className="mt-2 font-semibold" data-testid="add-customer-button" >+ Order Baru</Button>
                             <ModalCustomer isOpen={openModal} onClose={closeModal} />
                         </div>
                     </div>

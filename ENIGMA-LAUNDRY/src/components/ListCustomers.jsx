@@ -1,18 +1,22 @@
 // src/components/ListCustomers.js
 import { customerContext } from '../contexts/CustomerContex';
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Button, Modal } from '@nextui-org/react';
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Button, Modal, ModalHeader, ModalBody } from '@nextui-org/react';
 import { toast } from 'sonner';
 import ModalEditeCustomer from './ModalEditeCustomer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { axiosinstance } from '../lib/axios';
 import { useSelector } from 'react-redux';
+9
 
 const ListCustomers = () => {
   const { customers, getListCustomers } = customerContext(); // Mengambil data customer dan fungsi update/pembaruan dari context 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-   const token =useSelector(state=>state.auth.token)
+  const token = useSelector(state => state.auth.token)
+  const [isOpenDelete,setIsopenDelete]=useState(false)
 
+
+  
 
   // Fungsi Delet  dari #58
   const deleteCustomers = async (id) => {
@@ -26,17 +30,36 @@ const ListCustomers = () => {
       console.log(error.message);
     }
   };
-      //fungsi ini di triger dari  #57   untuk membawa parameter lalu di set pada setSelectedCustomer
-      // lalu state yang sudah di buat selectccustomer tersebut di lempar melalui prop customer di #66
+
+ 
+
+  
+  //fungsi ini di triger dari  #57   untuk membawa parameter lalu di set pada setSelectedCustomer
+  // lalu state yang sudah di buat selectccustomer tersebut di lempar melalui prop customer di #66
   const handleEditClick = (customer) => {
     setSelectedCustomer(customer);
     setOpenModal(true);
   };
-      
+  const handleDeleteClick =(id)=>{
+     setIsopenDelete(true)
+     console.log("status",isOpenDelete)
+  }
+  const closeModal =()=>{
+      setIsopenDelete(false)
+  }
+  const confirmDelete = () => {
+    if (customerToDelete) {
+      deleteCustomers(customerToDelete);
+    }
+    closeModal();
+  };
+
   const handleFetchDataAndCloseModal = () => {
     getListCustomers();
     setOpenModal(false);
   };
+
+ 
 
   return (
     <div className="w-full">
@@ -59,7 +82,7 @@ const ListCustomers = () => {
               <TableCell>{customer.createdAt}</TableCell>
               <TableCell>
                 <Button onClick={() => handleEditClick(customer)}>EDIT</Button>
-                <Button color="danger" onClick={() => deleteCustomers(customer.id)}>DELETE</Button>
+                <Button color="danger" onClick={() => handleDeleteClick(customer.id)} data-testid={`delete-customer-button-${customer.id}`}>DELETE</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -67,6 +90,13 @@ const ListCustomers = () => {
       </Table>
       <Modal isOpen={openModal} onOpenChange={() => setOpenModal(false)}>
         <ModalEditeCustomer handleFetchData={handleFetchDataAndCloseModal} customer={selectedCustomer} />
+      </Modal>
+      <Modal isOpen={isOpenDelete} onOpenChange={closeModal} >
+        <ModalHeader>Are you sure ?</ModalHeader>
+        <ModalBody>
+          <Button>cancle</Button>
+          <Button>sure</Button>
+        </ModalBody>
       </Modal>
     </div>
   );

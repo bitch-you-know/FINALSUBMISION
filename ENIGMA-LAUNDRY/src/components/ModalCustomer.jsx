@@ -48,7 +48,7 @@ const ModalCustomer = ({ isOpen, onClose }) => {
 
   return (
     <div>
-      <Modal isOpen={isOpen} onOpenChange={onClose}>
+      <Modal isOpen={isOpen} onOpenChange={onClose} data-testid="customer-modal">
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1 bg-slate-700 text-white">Transaksi Baru</ModalHeader>
           <ModalBody>
@@ -56,22 +56,23 @@ const ModalCustomer = ({ isOpen, onClose }) => {
               <Controller
                 name="name"
                 control={control}
-                render={({ field }) => <Input {...field} label="Nama" variant="bordered" />}
+                render={({ field }) => <Input {...field} label="Nama" variant="bordered" data-testid="customer-modal-name-input"/>}
+                
               />
               <Controller
                 name="phoneNumber"
                 control={control}
-                render={({ field }) => <Input {...field} label="PhoneNumber" variant="bordered" type="number" />}
+                render={({ field }) => <Input {...field} label="PhoneNumber" variant="bordered" type="number" data-testid="customer-modal-phone-input"/>}
               />
               <Controller
                 name="address"
                 control={control}
-                render={({ field }) => <Input {...field} label="Alamat" variant="bordered" />}
+                render={({ field }) => <Input {...field} label="Alamat" variant="bordered"data-testid="customer-modal-address-input" />}
               />
               <Button color="danger" variant="flat" onPress={onClose}>
                 Cancel
               </Button>
-              <Button type="submit" color="primary">
+              <Button  type="submit" color="primary" data-testid="add-customer-button">
                 Tambah Orderan
               </Button>
             </form>
