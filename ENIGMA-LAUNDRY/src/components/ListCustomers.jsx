@@ -50,7 +50,7 @@ const ListCustomers = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full" data-testid="list-customer">
       <Table>
         <TableHeader>
           <TableColumn>NO</TableColumn>
