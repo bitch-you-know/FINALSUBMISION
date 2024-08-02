@@ -134,7 +134,7 @@ const PackageList = () => {
       <Navbar />
 
       <div className="flex justify-end w-[95%] pt-4">
-        <Button onClick={isOpenModal} color="primary" className="font-semibold">Tambah product</Button>
+        <Button onClick={isOpenModal} color="primary" className="font-semibold" data-testid="add-package-button" >Tambah product</Button>
       </div>
 
       <div className="flex justify-center">
@@ -155,8 +155,8 @@ const PackageList = () => {
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell className="flex">
-                  <Button onClick={() => openModalEdite(list)}>EDITE</Button>
-                  <Button color="danger" onClick={() => deleteData(list.id)}>DELETE</Button>
+                  <Button onClick={() => openModalEdite(product)} data-testid="edite-package-button" >EDITE</Button>
+                  <Button color="danger" onClick={() => deleteData(product.id)}>DELETE</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -165,8 +165,8 @@ const PackageList = () => {
       </div>
 
       {/* MODAL UNTUK ADD PRODUCT BARU */}
-      <Modal isOpen={openModal} onOpenChange={closeModal}>
-        <ModalContent>
+      <Modal isOpen={openModal} onOpenChange={closeModal} data-testid="add-modal-package">
+        <ModalContent >
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 bg-slate-700 text-white">Transaksi Baru</ModalHeader>
@@ -176,25 +176,25 @@ const PackageList = () => {
                     name='name'
                     control={form.control}
                     render={({ field }) => (
-                      <Input {...field} label="JENIS PAKET" variant="bordered" />
+                      <Input {...field} label="JENIS PAKET" variant="bordered"  data-testid="product-input"/>
                     )}
                   />
                   <Controller
                     name='price'
                     control={form.control}
                     render={({ field }) => (
-                      <Input {...field} label="HARGA" variant="bordered" type='number' />
+                      <Input {...field} label="HARGA" variant="bordered" type='number' data-testid="price" />
                     )}
                   />
                   <Controller
                     name='type'
                     control={form.control}
                     render={({ field }) => (
-                      <Input {...field} label="BERAT" variant="bordered" type='number' />
+                      <Input {...field} label="BERAT" variant="bordered" type='number' data-testid="berat-input" />
                     )}
                   />
                   <Button color="danger" variant="flat" onPress={onClose}>Cancel</Button>
-                  <Button type='submit' color="primary">Tambah Orderan</Button>
+                  <Button type='submit' color="primary" data-testid="add-product">Tambah Paket</Button>
                 </form>
               </ModalBody>
             </>
@@ -203,11 +203,11 @@ const PackageList = () => {
       </Modal>
 
       {/* MODAL UNTUK EDIT */}
-      <Modal isOpen={modalEdite} onOpenChange={closeModal}>
+      <Modal isOpen={modalEdite} onOpenChange={closeModal} data-testid="edite-modal-package">
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader>Edite Paket</ModalHeader>
+              <ModalHeader >Edite Paket</ModalHeader>
               <Divider />
               <ModalBody>
                 <form onSubmit={formEdite.handleSubmit(editeData)}>

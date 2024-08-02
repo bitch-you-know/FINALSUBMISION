@@ -5,6 +5,7 @@ import { fireEvent, screen, getByTestId, render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import DashBoard from "./DashBoard";
+import { Button } from "@nextui-org/react";
 
 const store = createStore(reducers)
 
@@ -19,7 +20,7 @@ describe("DashBoardPage", () => {
         )
         expect(container).toBeDefined()
     })
-
+           //Buka modal add cusomer
     it("should open Modal when button is clicked", () => {
         render(
             <Provider store={store}>
@@ -28,14 +29,14 @@ describe("DashBoardPage", () => {
                 </BrowserRouter>
             </Provider>
         )
-        const button = screen.getByTestId("add-customer-button")
-        fireEvent.click(button)
+        const buttonAdd = screen.getByTestId("add-customer-button")
+        fireEvent.click(buttonAdd)
 
         const modal = screen.getByTestId("customer-modal")
 
-        expect(button).toBeVisible()
+        expect(buttonAdd).toBeVisible()
     })
-
+      
     it("should render ListCustomers Component", () => {
         render(
             <Provider store={store}>
@@ -50,6 +51,8 @@ describe("DashBoardPage", () => {
         expect(ListCustomers).toBeInTheDocument()
     })
 
+    
+   
     
 
 })
