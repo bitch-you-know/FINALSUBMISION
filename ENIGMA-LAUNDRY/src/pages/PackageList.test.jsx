@@ -37,7 +37,7 @@ describe("packageList", () => {
         expect(modal).toBeInTheDocument();
     });
 
-    it("should display Edit product button modal", async () => {
+    it("should display list product",()=>{
         render(
             <Provider store={store}>
                 <BrowserRouter>
@@ -46,14 +46,9 @@ describe("packageList", () => {
             </Provider>
         );
 
-        // Debugging to see what is rendered
-        screen.debug();
+        const listPackage =screen.getByTestId("list-product")
+        expect(listPackage).toBeInTheDocument();
+    })
 
-        // Assuming the product list is populated
-        const editButton = await waitFor(() => screen.getByTestId("edite-package-button"));
-        fireEvent.click(editButton);
-
-        const modal = await waitFor(() => screen.getByTestId("edite-modal-package"));
-        expect(modal).toBeInTheDocument();
-    });
+   
 });

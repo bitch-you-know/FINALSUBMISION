@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar"
 import "../style/CardStyle.css"
 import ListCustomers from "../components/ListCustomers"
 import { useState } from "react"
-import ModalCustomer from "../components/ModalCustomer"
+import ModalAddCustomer from "../components/ModalAddCustomer"
 
 import { CustomerProvider } from "../contexts/CustomerContex"
 
@@ -39,7 +39,7 @@ const DashBoard = () => {
                         </div>
                         <div>
                             <Button  onClick={openClick} color="primary" className="mt-2 font-semibold" data-testid="add-customer-button" >+ Order Baru</Button>
-                            <ModalCustomer isOpen={openModal} onClose={closeModal} />
+                            <ModalAddCustomer isOpen={openModal} onClose={closeModal} />
                         </div>
                     </div>
 

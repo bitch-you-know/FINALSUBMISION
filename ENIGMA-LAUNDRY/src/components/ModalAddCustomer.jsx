@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from "react-redux";
 import { customerContext } from "../contexts/CustomerContex";
 
-const ModalCustomer = ({ isOpen, onClose }) => {
+const ModalAddCustomer = ({ isOpen, onClose }) => {
   const token = useSelector((state) => state.auth.token)
 
   const { customers, getListCustomers } = customerContext();
@@ -83,9 +83,9 @@ const ModalCustomer = ({ isOpen, onClose }) => {
   );
 };
 
-ModalCustomer.propTypes = {
+ModalAddCustomer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default ModalCustomer;
+export default ModalAddCustomer;

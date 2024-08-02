@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { Controller, useForm } from 'react-hook-form';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Checkbox, Link, Divider } from '@nextui-org/react';
 import { toast } from "sonner";
+import PropTypes from "prop-types"
 
 
 
@@ -98,6 +99,16 @@ const ModalEditeCustomer = ({ handleFetchData, customer }) => {
       </ModalContent>
     </div>
   );
+};
+
+ModalEditeCustomer.propTypes = {
+  handleFetchData: PropTypes.func.isRequired,
+  customer: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    address: PropTypes.string,
+  }),
 };
 
 export default ModalEditeCustomer;

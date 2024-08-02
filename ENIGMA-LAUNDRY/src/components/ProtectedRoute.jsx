@@ -1,6 +1,8 @@
+import { element } from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import propTypes from "prop-types"
 
 const ProtectedRoute = ({ element}) => {
 
@@ -14,4 +16,7 @@ const ProtectedRoute = ({ element}) => {
   return isAuthenticated ? element : <Navigate to="/login" />;
 };
 
+ProtectedRoute.propTypes={
+  element:propTypes.element.isRequired
+}
 export default ProtectedRoute;

@@ -80,6 +80,8 @@ const ListCustomers = () => {
       <Modal isOpen={openModal} onOpenChange={() => setOpenModal(false)} data-testid="customer-modal" >
         <ModalEditeCustomer handleFetchData={handleFetchDataAndCloseModal} customer={selectedCustomer} />
       </Modal>
+
+      {/* MODAL UNTUK DELET CUSTOMER */}
       <Modal isOpen={isOpenDelete} onClose={closeModal}>
         <ModalContent>
           <ModalHeader>Are you sure?</ModalHeader>

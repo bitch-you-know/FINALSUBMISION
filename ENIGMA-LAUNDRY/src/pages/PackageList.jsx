@@ -137,9 +137,9 @@ const PackageList = () => {
         <Button onClick={isOpenModal} color="primary" className="font-semibold" data-testid="add-package-button" >Tambah product</Button>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center" >
         <br />
-        <Table className="flex justify-center w-[90%]">
+        <Table className="flex justify-center w-[90%]" data-testid="list-product">
           <TableHeader>
             <TableColumn>NO</TableColumn>
             <TableColumn>CODE-REGIS</TableColumn>
